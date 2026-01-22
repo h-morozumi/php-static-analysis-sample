@@ -346,9 +346,20 @@ $ composer run psalm-security
 
 Psalm Taint Analysisは、ユーザー入力（$_GET、$_POST、$_COOKIEなど）から危険な操作（SQL実行、HTML出力、ファイル操作など）までのデータフローを追跡します。
 
-このリポジトリのコードに対してTaint Analysisを実行すると、以下のようなセキュリティ脆弱性が検出されます：
+**重要**: このリポジトリのコードは、脆弱な処理パターンを示すためのサンプルですが、現在のコードには直接的な`$_GET`、`$_POST`、`$_COOKIE`の使用がありません。以下は、これらのユーザー入力が各メソッドのパラメータとして渡された場合に期待される出力例です。
 
-**注**: 以下は期待される出力の例です。実際にTaint Analysisを実行するには、コード内でユーザー入力（$_GET、$_POST、$_COOKIEなど）が使用されている必要があります。
+実際にTaint Analysisを機能させるには、各メソッドに対して以下のようなコードを追加する必要があります：
+```php
+// 例: DatabaseVulnerability.php
+public function getUserById($id) {
+    // この関数を呼び出す際に $_GET['id'] を渡すと Taint Analysis が反応する
+    $sql = "SELECT * FROM users WHERE id = " . $id;
+    return $this->pdo->query($sql);
+}
+
+// 呼び出し側で:
+// $db->getUserById($_GET['id']); // ← これがあれば Taint Analysis が検出
+```
 
 ```
 Target PHP version: 8.2 (inferred from composer.json)
@@ -470,6 +481,8 @@ ERROR: TaintedUnserialize - src/SecurityVulnerability.php:41:16
 Checks took 1.23 seconds and used 85.234MB of memory
 Psalm was able to infer types for 98.5% of the codebase
 ```
+
+**注**: 上記は、各メソッドのパラメータにユーザー入力（$_GET、$_POST、$_COOKIEなど）が渡された場合の仮想的な出力例です。現在のコードベースには直接的なスーパーグローバル変数の使用がないため、実際にこのような出力を得るには、コード内で`$_GET`、`$_POST`、`$_COOKIE`を使用するか、これらの値を各メソッドに渡す必要があります。
 
 ### 検出される脆弱性の詳細
 

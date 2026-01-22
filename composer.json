@@ -1,0 +1,25 @@
+{
+    "name": "h-morozumi/php-static-analysis-sample",
+    "description": "PHP static analysis sample with intentional vulnerabilities",
+    "type": "project",
+    "require": {
+        "php": ">=7.4"
+    },
+    "require-dev": {
+        "vimeo/psalm": "^5.0",
+        "phpstan/phpstan": "^1.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "scripts": {
+        "psalm": "psalm",
+        "phpstan": "phpstan analyse",
+        "analyse": [
+            "@psalm",
+            "@phpstan"
+        ]
+    }
+}

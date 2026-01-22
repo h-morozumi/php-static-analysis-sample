@@ -71,14 +71,16 @@ composer run security
 - **UnreachableStatement**: 到達不可能なコード
 
 ### Psalm Taint Analysisで検出されるもの（セキュリティモード）
-- **TaintedSql**: SQLインジェクション（2件検出）
-- **TaintedHtml**: XSS（クロスサイトスクリプティング）（2件検出）
-- **TaintedShell**: コマンドインジェクション（1件検出）
-- **TaintedFile**: ファイルパストラバーサル（2件検出）
-- **TaintedInclude**: ファイルインクルージョン（1件検出）
-- **TaintedUnserialize**: 安全でないデシリアライゼーション（1件検出）
+- **TaintedSql**: SQLインジェクション
+- **TaintedHtml**: XSS（クロスサイトスクリプティング）
+- **TaintedShell**: コマンドインジェクション
+- **TaintedFile**: ファイルパストラバーサル
+- **TaintedInclude**: ファイルインクルージョン
+- **TaintedUnserialize**: 安全でないデシリアライゼーション
 
 💡 **重要**: セキュリティ脆弱性を検出するには、必ず `--taint-analysis` オプションを使用してください。
+
+**検出例**: このリポジトリでは、Taint Analysisにより約9件のセキュリティ脆弱性が検出されます（実際の件数はコードの実装方法によって異なります）。
 
 ### PHPStanで検出されるもの (レベル9)
 - 型の不一致
@@ -95,7 +97,7 @@ composer run security
 - ファイルパストラバーサル
 - 弱い暗号化アルゴリズム
 
-**注意**: SQLインジェクションやXSSなどのセキュリティ脆弱性を検出するには、**Psalm Taint Analysis**（`composer run psalm-security`）を使用してください。このリポジトリでは、Taint Analysisにより9件のセキュリティ脆弱性が検出されます。
+**注意**: SQLインジェクションやXSSなどのセキュリティ脆弱性を検出するには、**Psalm Taint Analysis**（`composer run psalm-security`）を使用してください。Taint Analysisにより、複数のセキュリティ脆弱性が検出されます。
 
 ## 解析結果の確認 / Checking Results
 

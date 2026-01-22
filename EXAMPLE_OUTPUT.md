@@ -165,7 +165,9 @@ $ ./vendor/bin/psalm --taint-analysis
 $ composer run psalm-security
 ```
 
-### 期待される出力:
+### 期待される出力の例:
+
+**注**: 以下は期待される出力の例です。実際の行番号や検出数は、コードの実装方法やユーザー入力の取得方法によって異なります。
 
 ```
 Target PHP version: 8.2 (inferred from composer.json)

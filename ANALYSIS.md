@@ -312,23 +312,23 @@ public function unusedVariable()
 
 ## 検出可能性まとめ
 
-| 脆弱性タイプ | Psalm（通常） | Psalm（Taint） | PHPStan | 実際の検出数 | 推奨ツール |
-|------------|-------------|---------------|---------|------------|-----------|
-| SQLインジェクション | ❌ | ✅ | ❌ | 2件検出 | Psalm Taint Analysis |
-| XSS | ❌ | ✅ | ❌ | 2件検出 | Psalm Taint Analysis |
+| 脆弱性タイプ | Psalm（通常） | Psalm（Taint） | PHPStan | Taint検出 | 推奨ツール |
+|------------|-------------|---------------|---------|----------|-----------|
+| SQLインジェクション | ❌ | ✅ | ❌ | 複数箇所 | Psalm Taint Analysis |
+| XSS | ❌ | ✅ | ❌ | 複数箇所 | Psalm Taint Analysis |
 | 未定義変数 | ✅ | ✅ | ✅ | - | Psalm / PHPStan |
 | Null参照 | ✅ | ✅ | ✅ | - | Psalm / PHPStan |
 | 型の不整合 | ✅ | ✅ | ✅ | - | Psalm / PHPStan |
 | 配列キー存在チェック | ✅ | ✅ | ✅ | - | Psalm / PHPStan |
-| パストラバーサル | ❌ | ✅ | ❌ | 2件検出 | Psalm Taint Analysis |
-| ファイルインクルージョン | ❌ | ✅ | ❌ | 1件検出 | Psalm Taint Analysis |
-| 安全でないデシリアライズ | ❌ | ✅ | ❌ | 1件検出 | Psalm Taint Analysis |
+| パストラバーサル | ❌ | ✅ | ❌ | 複数箇所 | Psalm Taint Analysis |
+| ファイルインクルージョン | ❌ | ✅ | ❌ | あり | Psalm Taint Analysis |
+| 安全でないデシリアライズ | ❌ | ✅ | ❌ | あり | Psalm Taint Analysis |
 | 弱い暗号化 | ❌ | ❌ | ❌ | - | Security Plugin |
-| コマンドインジェクション | ❌ | ✅ | ❌ | 1件検出 | Psalm Taint Analysis |
+| コマンドインジェクション | ❌ | ✅ | ❌ | あり | Psalm Taint Analysis |
 | 到達不可能コード | ✅ | ✅ | ✅ | - | Psalm / PHPStan |
 | 未使用メソッド/変数 | ✅ | ✅ | ⚠️ | - | Psalm |
 
-**Psalm Taint Analysis検出実績: 合計9件のセキュリティ脆弱性を検出**
+**Psalm Taint Analysisの有効性**: 通常の静的解析では検出困難なセキュリティ脆弱性を検出可能
 
 ---
 
@@ -342,7 +342,13 @@ $ ./vendor/bin/psalm --taint-analysis
 $ composer run psalm-security
 ```
 
-### 実際の出力結果
+### 実行結果の例
+
+Psalm Taint Analysisは、ユーザー入力（$_GET、$_POST、$_COOKIEなど）から危険な操作（SQL実行、HTML出力、ファイル操作など）までのデータフローを追跡します。
+
+このリポジトリのコードに対してTaint Analysisを実行すると、以下のようなセキュリティ脆弱性が検出されます：
+
+**注**: 以下は期待される出力の例です。実際にTaint Analysisを実行するには、コード内でユーザー入力（$_GET、$_POST、$_COOKIEなど）が使用されている必要があります。
 
 ```
 Target PHP version: 8.2 (inferred from composer.json)
@@ -465,30 +471,35 @@ Checks took 1.23 seconds and used 85.234MB of memory
 Psalm was able to infer types for 98.5% of the codebase
 ```
 
-### 検出された脆弱性の詳細
+### 検出される脆弱性の詳細
 
-Psalm Taint Analysisにより、以下の9件のセキュリティ脆弱性が検出されました：
+Psalm Taint Analysisにより、以下のタイプのセキュリティ脆弱性が検出されます：
+
+**注**: 以下の行番号は例示です。実際の行番号は、コードの実装方法やユーザー入力の取得方法によって異なります。
 
 1. **TaintedSql × 2件** (SQLインジェクション)
-   - `DatabaseVulnerability.php:18` - $_GET['id'] からの汚染
-   - `DatabaseVulnerability.php:27` - $_POST['name'] からの汚染
+   - `DatabaseVulnerability.php` - ユーザー入力の直接連結（2箇所）
+   - 脆弱性: プリペアドステートメントを使わずSQL文を文字列連結で構築
 
 2. **TaintedHtml × 2件** (XSS)
-   - `XssVulnerability.php:15` - $_GET['input'] からの汚染
-   - `XssVulnerability.php:24` - $_POST['comment'] からの汚染
+   - `XssVulnerability.php` - エスケープなしのHTML出力（2箇所）
+   - 脆弱性: ユーザー入力を `htmlspecialchars()` でエスケープせずに出力
 
 3. **TaintedShell × 1件** (コマンドインジェクション)
-   - `SecurityVulnerability.php:32` - $_GET['host'] からの汚染
+   - `SecurityVulnerability.php` - `shell_exec()` へのユーザー入力
+   - 脆弱性: シェルコマンドに直接ユーザー入力を連結
 
 4. **TaintedFile × 2件** (パストラバーサル)
-   - `FileVulnerability.php:15` - $_GET['file'] からの汚染
-   - `FileVulnerability.php:24` - $_POST['path'] からの汚染
+   - `FileVulnerability.php` - 検証なしのファイル操作（2箇所）
+   - 脆弱性: `file_get_contents()` や `file_put_contents()` にユーザー指定のパスを使用
 
 5. **TaintedInclude × 1件** (ファイルインクルージョン)
-   - `FileVulnerability.php:33` - $_GET['module'] からの汚染
+   - `FileVulnerability.php` - ユーザー制御の `include`
+   - 脆弱性: ユーザー入力をそのまま `include` 文に使用
 
 6. **TaintedUnserialize × 1件** (安全でないデシリアライゼーション)
-   - `SecurityVulnerability.php:41` - $_COOKIE['data'] からの汚染
+   - `SecurityVulnerability.php` - 信頼できないデータの `unserialize()`
+   - 脆弱性: ユーザー入力を `unserialize()` に渡す
 
 ### データフローの可視化
 
@@ -521,15 +532,15 @@ PsalmとPHPStanは、主に以下の問題を検出するのに優れていま�
 - デッドコード
 - 到達不可能コード
 
-### Psalm Taint Analysisの実績
+### Psalm Taint Analysisの有効性
 
-⚠️ **Psalm Taint Analysis で実際に検出された脆弱性（合計9件）**:
-- SQLインジェクション: **2件**
-- XSS（クロスサイトスクリプティング）: **2件**
-- コマンドインジェクション: **1件**
-- ファイルパストラバーサル: **2件**
-- ファイルインクルージョン: **1件**
-- 安全でないデシリアライゼーション: **1件**
+⚠️ **Psalm Taint Analysis で検出可能な脆弱性**:
+- **SQLインジェクション**: プリペアドステートメントを使わない文字列連結
+- **XSS（クロスサイトスクリプティング）**: HTMLエスケープ処理の欠如
+- **コマンドインジェクション**: シェルコマンドへのユーザー入力の直接連結
+- **ファイルパストラバーサル**: ファイルパスの検証不足
+- **ファイルインクルージョン**: ユーザー制御のinclude/require
+- **安全でないデシリアライゼーション**: 信頼できないデータのunserialize
 
 これらの脆弱性は、通常の静的解析（PsalmやPHPStanの基本モード）では検出が困難です。Psalm Taint Analysisを実行することで、データフローを追跡し、ユーザー入力から危険な操作までの経路を特定できます。
 

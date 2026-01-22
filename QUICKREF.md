@@ -28,15 +28,14 @@ composer run analyse
 
 | ファイル | 脆弱性の種類 | Psalm | PHPStan | Taint Analysis |
 |---------|-------------|-------|---------|----------------|
-| DatabaseVulnerability.php | SQLインジェクション | ❌ | ❌ | ✅ (2件) |
-| XssVulnerability.php | XSS | ❌ | ❌ | ✅ (2件) |
+| DatabaseVulnerability.php | SQLインジェクション | ❌ | ❌ | ✅ |
+| XssVulnerability.php | XSS | ❌ | ❌ | ✅ |
 | TypeSafetyVulnerability.php | 型安全性 | ✅ | ✅ | - |
-| FileVulnerability.php | ファイル操作 | ⚠️ | ⚠️ | ✅ (3件) |
-| SecurityVulnerability.php | セキュリティ全般 | ⚠️ | ⚠️ | ✅ (2件) |
+| FileVulnerability.php | ファイル操作 | ⚠️ | ⚠️ | ✅ |
+| SecurityVulnerability.php | セキュリティ全般 | ⚠️ | ⚠️ | ✅ |
 | DeadCodeVulnerability.php | デッドコード | ✅ | ✅ | - |
 
 ✅ = 検出可能 / ⚠️ = 部分的に検出可能 / ❌ = 検出困難
-**Taint Analysis合計: 9件のセキュリティ脆弱性を検出**
 
 ## よく検出されるエラー
 
@@ -65,7 +64,7 @@ composer run analyse
 
 1. **型安全性が重要**: 静的解析ツールは型の問題を見つけるのが得意
 2. **セキュリティには専用ツール**: SQLインジェクションやXSSには **Psalm Taint Analysis** が必要
-3. **Taint Analysisは必須**: このリポジトリでは9件のセキュリティ脆弱性を検出
+3. **Taint Analysisは必須**: セキュリティ脆弱性の検出に有効
 4. **早期発見**: コーディング段階で問題を見つけることが重要
 5. **複数ツール**: 異なるツールを組み合わせることで、より多くの問題を発見できる
 

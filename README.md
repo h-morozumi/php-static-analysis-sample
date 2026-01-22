@@ -74,7 +74,7 @@ composer run analyse
 - 設定ファイル: `psalm.xml`
 - エラーレベル: 3
 - 未使用コードの検出: 有効
-- **Taint Analysis（セキュリティ検査）**: `composer psalm-security` または `./vendor/bin/psalm --taint-analysis` で実行
+- **Taint Analysis（セキュリティ検査）**: `composer run psalm-security` または `./vendor/bin/psalm --taint-analysis` で実行
   - SQLインジェクション検出
   - XSS（クロスサイトスクリプティング）検出
   - コマンドインジェクション検出

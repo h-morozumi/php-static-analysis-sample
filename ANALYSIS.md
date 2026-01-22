@@ -312,56 +312,229 @@ public function unusedVariable()
 
 ## 検出可能性まとめ
 
-| 脆弱性タイプ | Psalm（通常） | Psalm（Taint） | PHPStan | 推奨ツール |
-|------------|-------------|---------------|---------|-----------|
-| SQLインジェクション | ❌ | ✅ | ❌ | Psalm Taint Analysis |
-| XSS | ❌ | ✅ | ❌ | Psalm Taint Analysis |
-| 未定義変数 | ✅ | ✅ | ✅ | - |
-| Null参照 | ✅ | ✅ | ✅ | - |
-| 型の不整合 | ✅ | ✅ | ✅ | - |
-| 配列キー存在チェック | ✅ | ✅ | ✅ | - |
-| パストラバーサル | ❌ | ✅ | ❌ | Psalm Taint Analysis |
-| 弱い暗号化 | ❌ | ❌ | ❌ | Security Plugin |
-| eval使用 | ⚠️ | ✅ | ❌ | Psalm Taint Analysis |
-| コマンドインジェクション | ❌ | ✅ | ❌ | Psalm Taint Analysis |
-| 到達不可能コード | ✅ | ✅ | ✅ | - |
-| 未使用メソッド/変数 | ✅ | ✅ | ⚠️ | - |
+| 脆弱性タイプ | Psalm（通常） | Psalm（Taint） | PHPStan | Taint検出 | 推奨ツール |
+|------------|-------------|---------------|---------|----------|-----------|
+| SQLインジェクション | ❌ | ✅ | ❌ | 複数箇所 | Psalm Taint Analysis |
+| XSS | ❌ | ✅ | ❌ | 複数箇所 | Psalm Taint Analysis |
+| 未定義変数 | ✅ | ✅ | ✅ | - | Psalm / PHPStan |
+| Null参照 | ✅ | ✅ | ✅ | - | Psalm / PHPStan |
+| 型の不整合 | ✅ | ✅ | ✅ | - | Psalm / PHPStan |
+| 配列キー存在チェック | ✅ | ✅ | ✅ | - | Psalm / PHPStan |
+| パストラバーサル | ❌ | ✅ | ❌ | 複数箇所 | Psalm Taint Analysis |
+| ファイルインクルージョン | ❌ | ✅ | ❌ | あり | Psalm Taint Analysis |
+| 安全でないデシリアライズ | ❌ | ✅ | ❌ | あり | Psalm Taint Analysis |
+| 弱い暗号化 | ❌ | ❌ | ❌ | - | Security Plugin |
+| コマンドインジェクション | ❌ | ✅ | ❌ | あり | Psalm Taint Analysis |
+| 到達不可能コード | ✅ | ✅ | ✅ | - | Psalm / PHPStan |
+| 未使用メソッド/変数 | ✅ | ✅ | ⚠️ | - | Psalm |
+
+**Psalm Taint Analysisの有効性**: 通常の静的解析では検出困難なセキュリティ脆弱性を検出可能
 
 ---
 
-## Psalm Taint Analysis の期待される出力例
+## Psalm Taint Analysis の実行結果
+
+### 実行コマンド
 
 ```bash
 $ ./vendor/bin/psalm --taint-analysis
+# または
+$ composer run psalm-security
 ```
 
-### 期待される出力:
+### 実行結果の例
+
+Psalm Taint Analysisは、ユーザー入力（$_GET、$_POST、$_COOKIEなど）から危険な操作（SQL実行、HTML出力、ファイル操作など）までのデータフローを追跡します。
+
+**重要**: このリポジトリのコードは、脆弱な処理パターンを示すためのサンプルですが、現在のコードには直接的な`$_GET`、`$_POST`、`$_COOKIE`の使用がありません。以下は、これらのユーザー入力が各メソッドのパラメータとして渡された場合に期待される出力例です。
+
+実際にTaint Analysisを機能させるには、各メソッドに対して以下のようなコードを追加する必要があります：
+```php
+// 例: DatabaseVulnerability.php
+public function getUserById($id) {
+    // この関数を呼び出す際に $_GET['id'] を渡すと Taint Analysis が反応する
+    $sql = "SELECT * FROM users WHERE id = " . $id;
+    return $this->pdo->query($sql);
+}
+
+// 呼び出し側で:
+// $db->getUserById($_GET['id']); // ← これがあれば Taint Analysis が検出
+```
 
 ```
+Target PHP version: 8.2 (inferred from composer.json)
+Scanning files...
+Analyzing files...
+
 ERROR: TaintedSql - src/DatabaseVulnerability.php:18:16
     Detected tainted SQL
-    $sql = "SELECT * FROM users WHERE id = " . $id;
+    
+        $sql = "SELECT * FROM users WHERE id = " . $id;
+                                                    ^^^^
+    
+    Tainted input from $_GET
+    This path into the sink parameter #1 is:
+    
+        src/DatabaseVulnerability.php:14:19 - $_GET['id'] (TaintedInput/TaintedTextWithQuotes -> TaintedSql)
+        src/DatabaseVulnerability.php:18:53 - $id (TaintedInput/TaintedTextWithQuotes -> TaintedSql)
+
+ERROR: TaintedSql - src/DatabaseVulnerability.php:27:16
+    Detected tainted SQL
+    
+        $query = "SELECT * FROM users WHERE name LIKE '%" . $name . "%';";
+                                                                ^^^^^^
+    
+    Tainted input from $_POST
+    This path into the sink parameter #1 is:
+    
+        src/DatabaseVulnerability.php:23:21 - $_POST['name'] (TaintedInput/TaintedTextWithQuotes -> TaintedSql)
+        src/DatabaseVulnerability.php:27:61 - $name (TaintedInput/TaintedTextWithQuotes -> TaintedSql)
 
 ERROR: TaintedHtml - src/XssVulnerability.php:15:14
     Detected tainted HTML
-    echo "<div>" . $userInput . "</div>";
+    
+        echo "<div>" . $userInput . "</div>";
+                       ^^^^^^^^^^^
+    
+    Tainted input from $_GET
+    This path into the sink parameter #1 is:
+    
+        src/XssVulnerability.php:11:24 - $_GET['input'] (TaintedInput/TaintedTextWithQuotes -> TaintedHtml)
+        src/XssVulnerability.php:15:24 - $userInput (TaintedInput/TaintedTextWithQuotes -> TaintedHtml)
 
-ERROR: TaintedShell - src/SecurityVulnerability.php:32:14
+ERROR: TaintedHtml - src/XssVulnerability.php:24:16
+    Detected tainted HTML
+    
+        return "<p class='comment'>" . $comment . "</p>";
+                                       ^^^^^^^^^
+    
+    Tainted input from $_POST
+    This path into the sink parameter #1 is:
+    
+        src/XssVulnerability.php:20:21 - $_POST['comment'] (TaintedInput/TaintedTextWithQuotes -> TaintedHtml)
+        src/XssVulnerability.php:24:40 - $comment (TaintedInput/TaintedTextWithQuotes -> TaintedHtml)
+
+ERROR: TaintedShell - src/SecurityVulnerability.php:32:22
     Detected tainted shell command
-    $output = shell_exec("ping -c 1 " . $host);
+    
+        $output = shell_exec("ping -c 1 " . $host);
+                                             ^^^^^^
+    
+    Tainted input from $_GET
+    This path into the sink parameter #1 is:
+    
+        src/SecurityVulnerability.php:28:20 - $_GET['host'] (TaintedInput/TaintedTextWithQuotes -> TaintedShell)
+        src/SecurityVulnerability.php:32:42 - $host (TaintedInput/TaintedTextWithQuotes -> TaintedShell)
 
 ERROR: TaintedFile - src/FileVulnerability.php:15:16
     Detected tainted file path
-    return file_get_contents($filename);
+    
+        return file_get_contents($filename);
+                                 ^^^^^^^^^^
+    
+    Tainted input from $_GET
+    This path into the sink parameter #1 is:
+    
+        src/FileVulnerability.php:11:23 - $_GET['file'] (TaintedInput/TaintedTextWithQuotes -> TaintedFile)
+        src/FileVulnerability.php:15:34 - $filename (TaintedInput/TaintedTextWithQuotes -> TaintedFile)
 
-ERROR: TaintedEval - src/SecurityVulnerability.php:22:5
-    Detected tainted code execution
-    eval($code);
+ERROR: TaintedFile - src/FileVulnerability.php:24:9
+    Detected tainted file path
+    
+        file_put_contents($path, $data);
+                          ^^^^^^
+    
+    Tainted input from $_POST
+    This path into the sink parameter #1 is:
+    
+        src/FileVulnerability.php:20:20 - $_POST['path'] (TaintedInput/TaintedTextWithQuotes -> TaintedFile)
+        src/FileVulnerability.php:24:27 - $path (TaintedInput/TaintedTextWithQuotes -> TaintedFile)
+
+ERROR: TaintedInclude - src/FileVulnerability.php:33:9
+    Detected tainted file include
+    
+        include $module;
+                ^^^^^^^^
+    
+    Tainted input from $_GET
+    This path into the sink parameter #1 is:
+    
+        src/FileVulnerability.php:29:22 - $_GET['module'] (TaintedInput/TaintedTextWithQuotes -> TaintedInclude)
+        src/FileVulnerability.php:33:17 - $module (TaintedInput/TaintedTextWithQuotes -> TaintedInclude)
+
+ERROR: TaintedUnserialize - src/SecurityVulnerability.php:41:16
+    Detected tainted unserialize
+    
+        return unserialize($data);
+                           ^^^^^^
+    
+    Tainted input from $_COOKIE
+    This path into the sink parameter #1 is:
+    
+        src/SecurityVulnerability.php:37:20 - $_COOKIE['data'] (TaintedInput -> TaintedUnserialize)
+        src/SecurityVulnerability.php:41:28 - $data (TaintedInput -> TaintedUnserialize)
+
+------------------------------
+9 errors found
+------------------------------
+
+Checks took 1.23 seconds and used 85.234MB of memory
+Psalm was able to infer types for 98.5% of the codebase
 ```
+
+**注**: 上記は、各メソッドのパラメータにユーザー入力（$_GET、$_POST、$_COOKIEなど）が渡された場合の仮想的な出力例です。現在のコードベースには直接的なスーパーグローバル変数の使用がないため、実際にこのような出力を得るには、コード内で`$_GET`、`$_POST`、`$_COOKIE`を使用するか、これらの値を各メソッドに渡す必要があります。
+
+### 検出される脆弱性の詳細
+
+Psalm Taint Analysisにより、以下のタイプのセキュリティ脆弱性が検出されます：
+
+**注**: 以下の行番号は例示です。実際の行番号は、コードの実装方法やユーザー入力の取得方法によって異なります。
+
+1. **TaintedSql × 2件** (SQLインジェクション)
+   - `DatabaseVulnerability.php` - ユーザー入力の直接連結（2箇所）
+   - 脆弱性: プリペアドステートメントを使わずSQL文を文字列連結で構築
+
+2. **TaintedHtml × 2件** (XSS)
+   - `XssVulnerability.php` - エスケープなしのHTML出力（2箇所）
+   - 脆弱性: ユーザー入力を `htmlspecialchars()` でエスケープせずに出力
+
+3. **TaintedShell × 1件** (コマンドインジェクション)
+   - `SecurityVulnerability.php` - `shell_exec()` へのユーザー入力
+   - 脆弱性: シェルコマンドに直接ユーザー入力を連結
+
+4. **TaintedFile × 2件** (パストラバーサル)
+   - `FileVulnerability.php` - 検証なしのファイル操作（2箇所）
+   - 脆弱性: `file_get_contents()` や `file_put_contents()` にユーザー指定のパスを使用
+
+5. **TaintedInclude × 1件** (ファイルインクルージョン)
+   - `FileVulnerability.php` - ユーザー制御の `include`
+   - 脆弱性: ユーザー入力をそのまま `include` 文に使用
+
+6. **TaintedUnserialize × 1件** (安全でないデシリアライゼーション)
+   - `SecurityVulnerability.php` - 信頼できないデータの `unserialize()`
+   - 脆弱性: ユーザー入力を `unserialize()` に渡す
+
+### データフローの可視化
+
+Psalm Taint Analysisの重要な特徴は、**汚染されたデータがどのように流れるか**を追跡できることです：
+
+```
+汚染源（Source） → データフロー → 汚染シンク（Sink）
+    $_GET          →     変数      →   SQL実行
+    $_POST         →    関数呼び出し   →  HTML出力
+    $_COOKIE       →   代入・連結    →  shell_exec
+```
+
+各エラーメッセージには、以下の情報が含まれています：
+- **汚染源**: どこからユーザー入力が来たか（$_GET、$_POST、$_COOKIEなど）
+- **データパス**: データがどの変数を経由したか
+- **汚染シンク**: 危険な操作が行われる場所（SQL実行、HTML出力、ファイル操作など）
 
 ---
 
 ## 結論
+
+### 静的解析ツールの得意分野
 
 PsalmとPHPStanは、主に以下の問題を検出するのに優れています：
 
@@ -372,23 +545,50 @@ PsalmとPHPStanは、主に以下の問題を検出するのに優れていま�
 - デッドコード
 - 到達不可能コード
 
-⚠️ **Psalm Taint Analysis で検出可能**:
-- SQLインジェクション
-- XSS
-- コマンドインジェクション
-- ファイルパストラバーサル
-- evalによるコード実行
+### Psalm Taint Analysisの有効性
+
+⚠️ **Psalm Taint Analysis で検出可能な脆弱性**:
+- **SQLインジェクション**: プリペアドステートメントを使わない文字列連結
+- **XSS（クロスサイトスクリプティング）**: HTMLエスケープ処理の欠如
+- **コマンドインジェクション**: シェルコマンドへのユーザー入力の直接連結
+- **ファイルパストラバーサル**: ファイルパスの検証不足
+- **ファイルインクルージョン**: ユーザー制御のinclude/require
+- **安全でないデシリアライゼーション**: 信頼できないデータのunserialize
+
+これらの脆弱性は、通常の静的解析（PsalmやPHPStanの基本モード）では検出が困難です。Psalm Taint Analysisを実行することで、データフローを追跡し、ユーザー入力から危険な操作までの経路を特定できます。
+
+### 検出が困難な分野
 
 ❌ **検出が困難な分野**:
-- 弱い暗号化アルゴリズム
+- 弱い暗号化アルゴリズム（`md5()`, `rand()`の使用など）
 - セッション固定化
-- その他のビジネスロジックの脆弱性
+- ビジネスロジックの脆弱性
+- 認証・認可の問題
+
+これらの問題には、より専門的なセキュリティレビューやペネトレーションテストが必要です。
+
+### 推奨ツールの組み合わせ
 
 セキュリティの脆弱性を包括的に検出するには、以下のツールの組み合わせが推奨されます：
-- **Psalm** / **PHPStan**（型安全性）
-- **Psalm Taint Analysis**（セキュリティ脆弱性）
-- **Snyk Code**（追加のセキュリティスキャン）
-- **SonarQube**（総合的なコード品質）
+
+1. **Psalm（通常モード）** - 型安全性とコード品質
+   ```bash
+   composer run psalm
+   ```
+
+2. **Psalm Taint Analysis** - セキュリティ脆弱性の検出（必須）
+   ```bash
+   composer run psalm-security
+   ```
+
+3. **PHPStan** - 追加の型チェックと静的解析
+   ```bash
+   composer run phpstan
+   ```
+
+4. **追加のセキュリティツール**（推奨）
+   - **Snyk Code** - 追加のセキュリティスキャン
+   - **SonarQube** - 総合的なコード品質とセキュリティ分析
 
 ## 参考リンク
 

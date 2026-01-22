@@ -3,7 +3,7 @@
     "description": "PHP static analysis sample with intentional vulnerabilities",
     "type": "project",
     "require": {
-        "php": ">=7.4"
+        "php": ">=8.2"
     },
     "require-dev": {
         "vimeo/psalm": "^5.0",
@@ -17,6 +17,8 @@
     "scripts": {
         "psalm": "psalm",
         "phpstan": "phpstan analyse",
+        "psalm-security": "psalm --taint-analysis",
+        "security": "@psalm-security",
         "analyse": [
             "@psalm",
             "@phpstan"

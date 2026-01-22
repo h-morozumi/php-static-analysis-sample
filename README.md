@@ -85,6 +85,7 @@ composer run analyse
 
 ## 詳細ドキュメント
 
+- **[QUICKREF.md](QUICKREF.md)** - クイックリファレンス（最初にここから！）
 - **[USAGE.md](USAGE.md)** - 使用方法の詳細ガイド
 - **[ANALYSIS.md](ANALYSIS.md)** - 各脆弱性の詳細分析と検出可能性
 - **[EXAMPLE_OUTPUT.md](EXAMPLE_OUTPUT.md)** - 静的解析ツールの実行例と出力サンプル

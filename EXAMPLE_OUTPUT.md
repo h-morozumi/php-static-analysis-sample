@@ -149,18 +149,77 @@ Note: Using configuration file phpstan.neon.
 
 以下の脆弱性は、PsalmやPHPStanの基本設定では検出されません：
 
-❌ **SQLインジェクション**
-- 専門的なセキュリティツールが必要
-- Psalm Security Pluginなどの追加プラグインが推奨
+❌ **基本モードでは検出困難**
+- SQLインジェクション
+- XSS (クロスサイトスクリプティング)
+- コマンドインジェクション
+- ファイルパストラバーサル
 
-❌ **XSS (クロスサイトスクリプティング)**
-- HTMLエスケープの検証には専門ツールが必要
+これらのセキュリティ脆弱性を検出するには、**Psalm Taint Analysis** を使用する必要があります。
 
-❌ **コマンドインジェクション**
-- セキュリティスキャナーの使用が推奨
+## Psalm Taint Analysisの実行例
 
-❌ **ファイルパストラバーサル**
-- セキュリティレビューやペネトレーションテストが必要
+```bash
+$ ./vendor/bin/psalm --taint-analysis
+# または
+$ composer run psalm-security
+```
+
+### 期待される出力:
+
+```
+Target PHP version: 8.2 (inferred from composer.json)
+Scanning files...
+Analyzing files...
+
+ERROR: TaintedSql - src/DatabaseVulnerability.php:18:16
+    Detected tainted SQL
+    
+        $sql = "SELECT * FROM users WHERE id = " . $id;
+                                                    ^^^^
+    
+    Tainted input from $_GET
+    This path into the sink parameter #1 is:
+    
+        src/DatabaseVulnerability.php:14:19 - $_GET['id']
+        src/DatabaseVulnerability.php:18:53 - $id
+
+ERROR: TaintedHtml - src/XssVulnerability.php:15:14
+    Detected tainted HTML
+    
+        echo "<div>" . $userInput . "</div>";
+                       ^^^^^^^^^^^
+    
+    Tainted input from $_GET
+
+ERROR: TaintedShell - src/SecurityVulnerability.php:32:22
+    Detected tainted shell command
+    
+        $output = shell_exec("ping -c 1 " . $host);
+                                             ^^^^^^
+
+ERROR: TaintedFile - src/FileVulnerability.php:15:16
+    Detected tainted file path
+    
+        return file_get_contents($filename);
+                                 ^^^^^^^^^^
+
+------------------------------
+9 errors found
+------------------------------
+
+Checks took 1.23 seconds and used 85.234MB of memory
+```
+
+### Taint Analysisの特徴
+
+Psalm Taint Analysisは、通常の静的解析とは異なり、**データフローを追跡**します：
+
+1. **汚染源（Source）の特定**: ユーザー入力（$_GET、$_POST、$_COOKIEなど）
+2. **データの流れを追跡**: 変数への代入、関数の引数、戻り値など
+3. **汚染シンク（Sink）での検出**: 危険な操作（SQL実行、HTML出力、ファイル操作など）
+
+これにより、従来の静的解析では検出が困難だったセキュリティ脆弱性を発見できます。
 
 ## 推奨アクション
 

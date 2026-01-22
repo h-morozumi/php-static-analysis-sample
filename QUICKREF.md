@@ -9,37 +9,51 @@ composer install
 ## 基本コマンド
 
 ```bash
-# Psalmを実行
+# Psalmを実行（型チェック）
 composer run psalm
 
 # PHPStanを実行
 composer run phpstan
 
-# 両方を実行
+# Psalm Taint Analysisを実行（セキュリティ検査）
+composer run psalm-security
+# または
+composer run security
+
+# 両方を実行（PsalmとPHPStan）
 composer run analyse
 ```
 
 ## 各ファイルの概要
 
-| ファイル | 脆弱性の種類 | Psalm | PHPStan |
-|---------|-------------|-------|---------|
-| DatabaseVulnerability.php | SQLインジェクション | ❌ | ❌ |
-| XssVulnerability.php | XSS | ❌ | ❌ |
-| TypeSafetyVulnerability.php | 型安全性 | ✅ | ✅ |
-| FileVulnerability.php | ファイル操作 | ⚠️ | ⚠️ |
-| SecurityVulnerability.php | セキュリティ全般 | ⚠️ | ⚠️ |
-| DeadCodeVulnerability.php | デッドコード | ✅ | ✅ |
+| ファイル | 脆弱性の種類 | Psalm | PHPStan | Taint Analysis |
+|---------|-------------|-------|---------|----------------|
+| DatabaseVulnerability.php | SQLインジェクション | ❌ | ❌ | ✅ (2件) |
+| XssVulnerability.php | XSS | ❌ | ❌ | ✅ (2件) |
+| TypeSafetyVulnerability.php | 型安全性 | ✅ | ✅ | - |
+| FileVulnerability.php | ファイル操作 | ⚠️ | ⚠️ | ✅ (3件) |
+| SecurityVulnerability.php | セキュリティ全般 | ⚠️ | ⚠️ | ✅ (2件) |
+| DeadCodeVulnerability.php | デッドコード | ✅ | ✅ | - |
 
 ✅ = 検出可能 / ⚠️ = 部分的に検出可能 / ❌ = 検出困難
+**Taint Analysis合計: 9件のセキュリティ脆弱性を検出**
 
 ## よく検出されるエラー
 
-### Psalm
+### Psalm（通常モード）
 - `UndefinedVariable` - 未定義変数
 - `PossiblyNullReference` - Null参照の可能性
 - `MixedReturnStatement` - 型不明の戻り値
 - `UnusedMethod` - 未使用メソッド
 - `UnreachableStatement` - 到達不可能コード
+
+### Psalm Taint Analysis（セキュリティモード）
+- `TaintedSql` - SQLインジェクション
+- `TaintedHtml` - XSS（クロスサイトスクリプティング）
+- `TaintedShell` - コマンドインジェクション
+- `TaintedFile` - ファイルパストラバーサル
+- `TaintedInclude` - ファイルインクルージョン
+- `TaintedUnserialize` - 安全でないデシリアライゼーション
 
 ### PHPStan (レベル9)
 - "Undefined variable" - 未定義変数
@@ -50,9 +64,10 @@ composer run analyse
 ## 重要な学び
 
 1. **型安全性が重要**: 静的解析ツールは型の問題を見つけるのが得意
-2. **セキュリティは別物**: SQLインジェクションやXSSには専門ツールが必要
-3. **早期発見**: コーディング段階で問題を見つけることが重要
-4. **複数ツール**: 異なるツールを組み合わせることで、より多くの問題を発見できる
+2. **セキュリティには専用ツール**: SQLインジェクションやXSSには **Psalm Taint Analysis** が必要
+3. **Taint Analysisは必須**: このリポジトリでは9件のセキュリティ脆弱性を検出
+4. **早期発見**: コーディング段階で問題を見つけることが重要
+5. **複数ツール**: 異なるツールを組み合わせることで、より多くの問題を発見できる
 
 ## 次のステップ
 

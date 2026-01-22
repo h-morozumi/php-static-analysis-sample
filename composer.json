@@ -7,8 +7,7 @@
     },
     "require-dev": {
         "vimeo/psalm": "^5.0",
-        "phpstan/phpstan": "^1.10",
-        "psalm/plugin-security": "^2.0"
+        "phpstan/phpstan": "^1.10"
     },
     "autoload": {
         "psr-4": {

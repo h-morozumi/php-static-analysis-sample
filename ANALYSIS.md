@@ -2,13 +2,78 @@
 
 このドキュメントでは、各ファイルに含まれる脆弱性と、静的解析ツールでの検出可能性について説明します。
 
+## Psalm Taint Analysis について
+
+Psalm には「Taint Analysis（汚染解析）」という強力なセキュリティ機能があります。この機能を使うことで、通常の静的解析では検出が困難なセキュリティ脆弱性を検出できます。
+
+### Taint Analysis の仕組み
+
+1. **データフローの追跡**: コード内でデータがどのように流れるかをグラフ化して追跡します
+2. **汚染源（Taint Source）**: ユーザー入力が入ってくる場所（例：`$_GET`, `$_POST`, `$_COOKIE`）
+3. **汚染シンク（Taint Sink）**: 汚染されたデータが危険な処理に使用される場所（例：SQLクエリ、HTML出力）
+
+### Taint Analysis の実行方法
+
+```bash
+# Taint Analysis を実行
+./vendor/bin/psalm --taint-analysis
+```
+
+### 検出可能な脆弱性タイプ
+
+| タイプ | 説明 |
+|-------|------|
+| `sql` | SQLインジェクション |
+| `html` | クロスサイトスクリプティング（XSS） |
+| `shell` | コマンドインジェクション |
+| `include` | ファイルインクルージョン |
+| `eval` | 任意コード実行 |
+| `unserialize` | 安全でないデシリアライゼーション |
+| `header` | ヘッダーインジェクション |
+| `ssrf` | サーバーサイドリクエストフォージェリ |
+| `ldap` | LDAPインジェクション |
+| `file` | ファイルパストラバーサル |
+
+### Taint Analysis の設定例
+
+psalm.xml に以下を追加することで、Taint Analysis を有効化できます：
+
+```xml
+<?xml version="1.0"?>
+<psalm
+    errorLevel="3"
+    resolveFromConfigFile="true"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="https://getpsalm.org/schema/config"
+    xsi:schemaLocation="https://getpsalm.org/schema/config vendor/vimeo/psalm/config.xsd"
+    findUnusedBaselineEntry="true"
+    findUnusedCode="true"
+>
+    <projectFiles>
+        <directory name="src" />
+        <ignoreFiles>
+            <directory name="vendor" />
+        </ignoreFiles>
+    </projectFiles>
+    
+    <!-- Taint Analysis 用の設定 -->
+    <taintAnalysis>
+        <ignoreFiles>
+            <directory name="tests" />
+        </ignoreFiles>
+    </taintAnalysis>
+</psalm>
+```
+
+---
+
 ## 1. DatabaseVulnerability.php - SQLインジェクション
 
 ### 脆弱性の内容
 ```php
 // 危険な例
 $sql = "SELECT * FROM users WHERE id = " . $id;
-$query = "SELECT * FROM users WHERE name LIKE '%" . $name . "%'";
+$query = "SELECT * FROM users WHERE name LIKE '%" . $name . "%';";
 ```
 
 ### 問題点
@@ -17,9 +82,10 @@ $query = "SELECT * FROM users WHERE name LIKE '%" . $name . "%'";
 - SQLインジェクション攻撃が可能
 
 ### 静的解析での検出
-- **Psalm**: 基本的には検出困難（文字列連結の解析には限界がある）
+- **Psalm（通常モード）**: 基本的には検出困難（文字列連結の解析には限界がある）
+- **Psalm（Taint Analysis）**: ✅ **検出可能** - `TaintedSql` として検出
 - **PHPStan**: 基本的には検出困難
-- **専門ツール必要**: Psalm Security Plugin、Snyk Code などのセキュリティ特化ツールが必要
+- **専門ツール必要**: Psalm Taint Analysis を使用することで検出可能
 
 ### 修正方法
 ```php
@@ -45,9 +111,9 @@ return "<p class='comment'>" . $comment . "</p>";
 - XSS攻撃が可能
 
 ### 静的解析での検出
-- **Psalm**: 基本設定では検出困難（文字列操作は追跡が難しい）
+- **Psalm（通常モード）**: 基本設定では検出困難（文字列操作は追跡が難しい）
+- **Psalm（Taint Analysis）**: ✅ **検出可能** - `TaintedHtml` として検出
 - **PHPStan**: 基本設定では検出困難
-- **専門ツール必要**: セキュリティプラグインが必要
 
 ### 修正方法
 ```php
@@ -144,9 +210,9 @@ public function readFile($filename)
 - 任意のファイル読み取り/書き込みが可能
 
 ### 静的解析での検出
-- **Psalm**: 部分的に検出可能（型チェックのみ）
+- **Psalm（通常モード）**: 部分的に検出可能（型チェックのみ）
+- **Psalm（Taint Analysis）**: ✅ **検出可能** - `TaintedFile` として検出
 - **PHPStan**: 部分的に検出可能（型チェックのみ）
-- **専門ツール必要**: セキュリティスキャナーが推奨
 
 ---
 
@@ -179,7 +245,8 @@ public function executeCode($code)
 ```
 
 #### 静的解析での検出
-- **Psalm**: ⚠️ 部分的に検出可能（設定による）- `ForbiddenCode`
+- **Psalm（通常モード）**: ⚠️ 部分的に検出可能（設定による）- `ForbiddenCode`
+- **Psalm（Taint Analysis）**: ✅ **検出可能** - `TaintedEval` として検出
 - **PHPStan**: ❌ 基本設定では検出困難
 
 ### 脆弱性3: コマンドインジェクション
@@ -192,9 +259,9 @@ public function pingHost($host)
 ```
 
 #### 静的解析での検出
-- **Psalm**: ❌ 基本設定では検出困難
+- **Psalm（通常モード）**: ❌ 基本設定では検出困難
+- **Psalm（Taint Analysis）**: ✅ **検出可能** - `TaintedShell` として検出
 - **PHPStan**: ❌ 基本設定では検出困難
-- **セキュリティスキャナー**: 検出可能
 
 ---
 
@@ -245,20 +312,54 @@ public function unusedVariable()
 
 ## 検出可能性まとめ
 
-| 脆弱性タイプ | Psalm | PHPStan | 推奨ツール |
-|------------|-------|---------|-----------|
-| SQLインジェクション | ❌ | ❌ | Psalm Security Plugin |
-| XSS | ❌ | ❌ | Security Scanner |
-| 未定義変数 | ✅ | ✅ | - |
-| Null参照 | ✅ | ✅ | - |
-| 型の不整合 | ✅ | ✅ | - |
-| 配列キー存在チェック | ✅ | ✅ | - |
-| パストラバーサル | ❌ | ❌ | Security Scanner |
-| 弱い暗号化 | ❌ | ❌ | Security Plugin |
-| eval使用 | ⚠️ | ❌ | Security Plugin |
-| コマンドインジェクション | ❌ | ❌ | Security Scanner |
-| 到達不可能コード | ✅ | ✅ | - |
-| 未使用メソッド/変数 | ✅ | ⚠️ | - |
+| 脆弱性タイプ | Psalm（通常） | Psalm（Taint） | PHPStan | 推奨ツール |
+|------------|-------------|---------------|---------|-----------|
+| SQLインジェクション | ❌ | ✅ | ❌ | Psalm Taint Analysis |
+| XSS | ❌ | ✅ | ❌ | Psalm Taint Analysis |
+| 未定義変数 | ✅ | ✅ | ✅ | - |
+| Null参照 | ✅ | ✅ | ✅ | - |
+| 型の不整合 | ✅ | ✅ | ✅ | - |
+| 配列キー存在チェック | ✅ | ✅ | ✅ | - |
+| パストラバーサル | ❌ | ✅ | ❌ | Psalm Taint Analysis |
+| 弱い暗号化 | ❌ | ❌ | ❌ | Security Plugin |
+| eval使用 | ⚠️ | ✅ | ❌ | Psalm Taint Analysis |
+| コマンドインジェクション | ❌ | ✅ | ❌ | Psalm Taint Analysis |
+| 到達不可能コード | ✅ | ✅ | ✅ | - |
+| 未使用メソッド/変数 | ✅ | ✅ | ⚠️ | - |
+
+---
+
+## Psalm Taint Analysis の期待される出力例
+
+```bash
+$ ./vendor/bin/psalm --taint-analysis
+```
+
+### 期待される出力:
+
+```
+ERROR: TaintedSql - src/DatabaseVulnerability.php:18:16
+    Detected tainted SQL
+    $sql = "SELECT * FROM users WHERE id = " . $id;
+
+ERROR: TaintedHtml - src/XssVulnerability.php:15:14
+    Detected tainted HTML
+    echo "<div>" . $userInput . "</div>";
+
+ERROR: TaintedShell - src/SecurityVulnerability.php:32:14
+    Detected tainted shell command
+    $output = shell_exec("ping -c 1 " . $host);
+
+ERROR: TaintedFile - src/FileVulnerability.php:15:16
+    Detected tainted file path
+    return file_get_contents($filename);
+
+ERROR: TaintedEval - src/SecurityVulnerability.php:22:5
+    Detected tainted code execution
+    eval($code);
+```
+
+---
 
 ## 結論
 
@@ -271,15 +372,25 @@ PsalmとPHPStanは、主に以下の問題を検出するのに優れていま�
 - デッドコード
 - 到達不可能コード
 
-❌ **検出が困難な分野**:
+⚠️ **Psalm Taint Analysis で検出可能**:
 - SQLインジェクション
 - XSS
 - コマンドインジェクション
 - ファイルパストラバーサル
-- 暗号化の脆弱性
+- evalによるコード実行
+
+❌ **検出が困難な分野**:
+- 弱い暗号化アルゴリズム
+- セッション固定化
+- その他のビジネスロジックの脆弱性
 
 セキュリティの脆弱性を包括的に検出するには、以下のツールの組み合わせが推奨されます：
-- Psalm / PHPStan（型安全性）
-- Psalm Security Plugin（セキュリティ）
-- Snyk Code（セキュリティスキャン）
-- SonarQube（総合的なコード品質）
+- **Psalm** / **PHPStan**（型安全性）
+- **Psalm Taint Analysis**（セキュリティ脆弱性）
+- **Snyk Code**（追加のセキュリティスキャン）
+- **SonarQube**（総合的なコード品質）
+
+## 参考リンク
+
+- [Psalm Security Analysis Documentation](https://psalm.dev/docs/security_analysis/)
+- [Detect PHP Security Vulnerabilities with Psalm](https://psalm.dev/articles/detect-security-vulnerabilities-with-psalm)

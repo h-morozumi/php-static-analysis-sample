@@ -18,6 +18,11 @@ composer run psalm
 # PHPStanで静的解析を実行
 composer run phpstan
 
+# Psalm Taint Analysis でセキュリティ検査を実行
+composer run psalm-security
+# または
+composer run security
+
 # 両方の解析を実行
 composer run analyse
 ```
@@ -69,6 +74,12 @@ composer run analyse
 - 設定ファイル: `psalm.xml`
 - エラーレベル: 3
 - 未使用コードの検出: 有効
+- **Taint Analysis（セキュリティ検査）**: `composer psalm-security` または `./vendor/bin/psalm --taint-analysis` で実行
+  - SQLインジェクション検出
+  - XSS（クロスサイトスクリプティング）検出
+  - コマンドインジェクション検出
+  - パストラバーサル検出
+  - その他のユーザー入力に起因する脆弱性の検出
 
 ### PHPStan
 - 設定ファイル: `phpstan.neon`

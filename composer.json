@@ -2,6 +2,7 @@
     "name": "h-morozumi/php-static-analysis-sample",
     "description": "PHP static analysis sample with intentional vulnerabilities",
     "type": "project",
+    "license": "MIT",
     "require": {
         "php": ">=8.2"
     },

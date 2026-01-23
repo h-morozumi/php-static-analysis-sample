@@ -136,18 +136,21 @@ jobs:
       - name: Run Psalm Taint Analysis
         id: psalm-taint
         run: |
-          ./vendor/bin/psalm --no-cache --taint-analysis --report=results.sarif || echo "PSALM_FAILED=true" >> $GITHUB_ENV
-        continue-on-error: true  # SARIFアップロードのため一旦続行
+          set +e
+          ./vendor/bin/psalm --no-cache --taint-analysis --report=results.sarif
+          EXIT_CODE=$?
+          echo "psalm_exit_code=$EXIT_CODE" >> $GITHUB_OUTPUT
+          exit 0
 
       - name: Upload SARIF to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v3
-        if: always()  # 前のステップが失敗しても実行
+        if: always()
         with:
           sarif_file: results.sarif
           category: psalm-taint-analysis
 
       - name: Check Psalm Taint Analysis Result
-        if: env.PSALM_FAILED == 'true'
+        if: steps.psalm-taint.outputs.psalm_exit_code != '0'
         run: |
           echo "::error::Psalm Taint Analysis detected security vulnerabilities!"
           exit 1

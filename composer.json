@@ -15,13 +15,14 @@
         }
     },
     "scripts": {
-        "psalm": "psalm",
-        "phpstan": "phpstan analyse",
-        "psalm-security": "psalm --taint-analysis",
+        "psalm": "psalm --no-cache",
+        "phpstan": "phpstan analyse --no-progress",
+        "psalm-security": "psalm --no-cache --taint-analysis",
         "security": "@psalm-security",
         "analyse": [
             "@psalm",
-            "@phpstan"
+            "@phpstan",
+            "@psalm-security"
         ]
     }
 }

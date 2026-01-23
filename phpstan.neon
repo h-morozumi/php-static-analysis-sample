@@ -3,3 +3,11 @@ parameters:
     paths:
         - src
     reportUnmatchedIgnoredErrors: false
+
+services:
+    errorFormatter.sarif:
+        class: PHPStanSarifErrorFormatter\SarifErrorFormatter
+        arguments:
+            relativePathHelper: @simpleRelativePathHelper
+            currentWorkingDirectory: %currentWorkingDirectory%
+            pretty: true

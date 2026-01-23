@@ -8,7 +8,8 @@
     },
     "require-dev": {
         "vimeo/psalm": "^5.0",
-        "phpstan/phpstan": "^1.10"
+        "phpstan/phpstan": "^1.10",
+        "jbelien/phpstan-sarif-formatter": "^1.2"
     },
     "autoload": {
         "psr-4": {
@@ -24,6 +25,56 @@
             "@psalm",
             "@phpstan",
             "@psalm-security"
+        ],
+        "report:psalm": [
+            "@php -r \"@mkdir('reports', 0777, true);\"",
+            "psalm --no-cache --report=reports/psalm.json || true",
+            "psalm --no-cache --report=reports/psalm.xml || true",
+            "psalm --no-cache --report=reports/psalm.sarif || true",
+            "psalm --no-cache --report=reports/psalm.txt || true",
+            "psalm --no-cache --report=reports/psalm.console || true",
+            "psalm --no-cache --report=reports/psalm.emacs || true",
+            "psalm --no-cache --report=reports/psalm.pylint || true",
+            "psalm --no-cache --report=reports/psalm-checkstyle.xml || true",
+            "psalm --no-cache --report=reports/psalm-junit.xml || true",
+            "psalm --no-cache --report=reports/psalm-codeclimate.json || true",
+            "psalm --no-cache --report=reports/psalm-sonarqube.json || true",
+            "psalm --no-cache --report=reports/psalm-summary.json || true",
+            "psalm --no-cache --report=reports/psalm-count.txt || true"
+        ],
+        "report:psalm-taint": [
+            "@php -r \"@mkdir('reports', 0777, true);\"",
+            "psalm --no-cache --taint-analysis --report=reports/psalm-taint.json || true",
+            "psalm --no-cache --taint-analysis --report=reports/psalm-taint.xml || true",
+            "psalm --no-cache --taint-analysis --report=reports/psalm-taint.sarif || true",
+            "psalm --no-cache --taint-analysis --report=reports/psalm-taint.txt || true",
+            "psalm --no-cache --taint-analysis --report=reports/psalm-taint.console || true",
+            "psalm --no-cache --taint-analysis --report=reports/psalm-taint.emacs || true",
+            "psalm --no-cache --taint-analysis --report=reports/psalm-taint.pylint || true",
+            "psalm --no-cache --taint-analysis --report=reports/psalm-taint-checkstyle.xml || true",
+            "psalm --no-cache --taint-analysis --report=reports/psalm-taint-junit.xml || true",
+            "psalm --no-cache --taint-analysis --report=reports/psalm-taint-codeclimate.json || true",
+            "psalm --no-cache --taint-analysis --report=reports/psalm-taint-sonarqube.json || true",
+            "psalm --no-cache --taint-analysis --report=reports/psalm-taint-summary.json || true",
+            "psalm --no-cache --taint-analysis --report=reports/psalm-taint-count.txt || true"
+        ],
+        "report:phpstan": [
+            "@php -r \"@mkdir('reports', 0777, true);\"",
+            "phpstan analyse --no-progress --error-format=json > reports/phpstan.json || true",
+            "phpstan analyse --no-progress --error-format=checkstyle > reports/phpstan-checkstyle.xml || true",
+            "phpstan analyse --no-progress --error-format=junit > reports/phpstan-junit.xml || true",
+            "phpstan analyse --no-progress --error-format=prettyJson > reports/phpstan-pretty.json || true",
+            "phpstan analyse --no-progress --error-format=gitlab > reports/phpstan-gitlab.json || true",
+            "phpstan analyse --no-progress --error-format=github > reports/phpstan-github.txt || true",
+            "phpstan analyse --no-progress --error-format=teamcity > reports/phpstan-teamcity.txt || true",
+            "phpstan analyse --no-progress --error-format=sarif > reports/phpstan.sarif || true",
+            "phpstan analyse --no-progress --error-format=table > reports/phpstan-table.txt || true",
+            "phpstan analyse --no-progress --error-format=raw > reports/phpstan-raw.txt || true"
+        ],
+        "report:all": [
+            "@report:psalm",
+            "@report:psalm-taint",
+            "@report:phpstan"
         ]
     }
 }

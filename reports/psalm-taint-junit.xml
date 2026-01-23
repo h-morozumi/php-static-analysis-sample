@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites failures="11" errors="0" name="psalm" tests="11" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/junit-team/junit5/r5.5.1/platform-tests/src/test/resources/jenkins-junit.xsd">
+  <testsuite name="src/EntryPoint.php" failures="2" errors="0" tests="2">
+    <testcase name="src/EntryPoint.php:45" classname="TaintedHtml" assertions="1">
+      <failure type="TaintedHtml">message: Detected tainted HTML
+type: TaintedHtml
+snippet: echo $xss-&gt;renderComment($comment);
+selected_text: $xss-&gt;renderComment($comment)
+line: 45
+column_from: 14
+column_to: 43
+</failure>
+    </testcase>
+    <testcase name="src/EntryPoint.php:45" classname="TaintedTextWithQuotes" assertions="1">
+      <failure type="TaintedTextWithQuotes">message: Detected tainted text with possible quotes
+type: TaintedTextWithQuotes
+snippet: echo $xss-&gt;renderComment($comment);
+selected_text: $xss-&gt;renderComment($comment)
+line: 45
+column_from: 14
+column_to: 43
+</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="src/FileVulnerability.php" failures="2" errors="0" tests="2">
+    <testcase name="src/FileVulnerability.php:19" classname="TaintedFile" assertions="2">
+      <failure type="TaintedFile">message: Detected tainted file handling
+type: TaintedFile
+snippet: return file_get_contents($filename);
+selected_text: $filename
+line: 19
+column_from: 34
+column_to: 43
+</failure>
+    </testcase>
+    <testcase name="src/FileVulnerability.php:29" classname="TaintedFile" assertions="2">
+      <failure type="TaintedFile">message: Detected tainted file handling
+type: TaintedFile
+snippet: file_put_contents($path, $content);
+selected_text: $path
+line: 29
+column_from: 27
+column_to: 32
+</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="src/SecurityVulnerability.php" failures="3" errors="0" tests="3">
+    <testcase name="src/SecurityVulnerability.php:38" classname="TaintedEval" assertions="1">
+      <failure type="TaintedEval">message: Detected tainted code passed to eval or similar
+type: TaintedEval
+snippet: eval($code);
+selected_text: $code
+line: 38
+column_from: 14
+column_to: 19
+</failure>
+    </testcase>
+    <testcase name="src/SecurityVulnerability.php:48" classname="TaintedShell" assertions="1">
+      <failure type="TaintedShell">message: Detected tainted shell code
+type: TaintedShell
+snippet: $output = shell_exec("ping -c 1 " . $host);
+selected_text: "ping -c 1 " . $host
+line: 48
+column_from: 30
+column_to: 50
+</failure>
+    </testcase>
+    <testcase name="src/SecurityVulnerability.php:59" classname="TaintedUnserialize" assertions="1">
+      <failure type="TaintedUnserialize">message: Detected tainted code passed to unserialize or similar
+type: TaintedUnserialize
+snippet: return unserialize($serializedData);
+selected_text: $serializedData
+line: 59
+column_from: 28
+column_to: 43
+</failure>
+    </testcase>
+  </testsuite>
+  <testsuite name="src/XssVulnerability.php" failures="4" errors="0" tests="4">
+    <testcase name="src/XssVulnerability.php:18" classname="TaintedHtml" assertions="2">
+      <failure type="TaintedHtml">message: Detected tainted HTML
+type: TaintedHtml
+snippet: echo "&lt;div&gt;" . $userInput . "&lt;/div&gt;";
+selected_text: "&lt;div&gt;" . $userInput . "&lt;/div&gt;"
+line: 18
+column_from: 14
+column_to: 45
+</failure>
+    </testcase>
+    <testcase name="src/XssVulnerability.php:36" classname="TaintedHtml" assertions="2">
+      <failure type="TaintedHtml">message: Detected tainted HTML
+type: TaintedHtml
+snippet: echo "&lt;script&gt;alert('" . $message . "');&lt;/script&gt;";
+selected_text: "&lt;script&gt;alert('" . $message . "');&lt;/script&gt;"
+line: 36
+column_from: 14
+column_to: 59
+</failure>
+    </testcase>
+    <testcase name="src/XssVulnerability.php:18" classname="TaintedTextWithQuotes" assertions="2">
+      <failure type="TaintedTextWithQuotes">message: Detected tainted text with possible quotes
+type: TaintedTextWithQuotes
+snippet: echo "&lt;div&gt;" . $userInput . "&lt;/div&gt;";
+selected_text: "&lt;div&gt;" . $userInput . "&lt;/div&gt;"
+line: 18
+column_from: 14
+column_to: 45
+</failure>
+    </testcase>
+    <testcase name="src/XssVulnerability.php:36" classname="TaintedTextWithQuotes" assertions="2">
+      <failure type="TaintedTextWithQuotes">message: Detected tainted text with possible quotes
+type: TaintedTextWithQuotes
+snippet: echo "&lt;script&gt;alert('" . $message . "');&lt;/script&gt;";
+selected_text: "&lt;script&gt;alert('" . $message . "');&lt;/script&gt;"
+line: 36
+column_from: 14
+column_to: 59
+</failure>
+    </testcase>
+  </testsuite>
+</testsuites>

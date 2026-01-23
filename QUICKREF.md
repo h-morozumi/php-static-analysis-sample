@@ -20,9 +20,27 @@ composer run psalm-security
 # または
 composer run security
 
-# 両方を実行（PsalmとPHPStan）
+# すべてを実行（Psalm + PHPStan + Taint Analysis）
 composer run analyse
 ```
+
+## レポート生成コマンド
+
+```bash
+# Psalmのレポートを全形式で生成
+composer run report:psalm
+
+# Psalm Taint Analysisのレポートを全形式で生成
+composer run report:psalm-taint
+
+# PHPStanのレポートを全形式で生成
+composer run report:phpstan
+
+# すべてのレポートを一括生成
+composer run report:all
+```
+
+レポートは `/reports` ディレクトリに出力されます（SARIF、JSON、XML、TXT等）。
 
 ## 各ファイルの概要
 
@@ -34,6 +52,7 @@ composer run analyse
 | FileVulnerability.php | ファイル操作 | ⚠️ | ⚠️ | ✅ |
 | SecurityVulnerability.php | セキュリティ全般 | ⚠️ | ⚠️ | ✅ |
 | DeadCodeVulnerability.php | デッドコード | ✅ | ✅ | - |
+| EntryPoint.php | Taint Analysis用エントリーポイント | ⚠️ | ⚠️ | ✅ |
 
 ✅ = 検出可能 / ⚠️ = 部分的に検出可能 / ❌ = 検出困難
 
@@ -49,16 +68,26 @@ composer run analyse
 ### Psalm Taint Analysis（セキュリティモード）
 - `TaintedSql` - SQLインジェクション
 - `TaintedHtml` - XSS（クロスサイトスクリプティング）
+- `TaintedTextWithQuotes` - クォート付きテキストの危険な出力
 - `TaintedShell` - コマンドインジェクション
 - `TaintedFile` - ファイルパストラバーサル
 - `TaintedInclude` - ファイルインクルージョン
 - `TaintedUnserialize` - 安全でないデシリアライゼーション
+- `TaintedEval` - 任意コード実行
 
 ### PHPStan (レベル9)
 - "Undefined variable" - 未定義変数
 - "Cannot call method on mixed" - 型不明での メソッド呼び出し
 - "has no return type" - 戻り値の型指定なし
 - "Unreachable statement" - 到達不可能コード
+
+## 検出されるエラー数の目安
+
+| ツール | 検出数 |
+|--------|--------|
+| Psalm（通常モード） | 約20エラー + 約57件の情報 |
+| Psalm Taint Analysis | 約11件のセキュリティ脆弱性 |
+| PHPStan（レベル9） | 約63件 |
 
 ## 重要な学び
 

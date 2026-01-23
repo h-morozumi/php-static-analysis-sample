@@ -1,0 +1,1 @@
+{"issue_counts":{"TaintedHtml":3,"TaintedTextWithQuotes":3,"TaintedFile":2,"TaintedEval":1,"TaintedShell":1,"TaintedUnserialize":1},"mixed_expression_count":30,"total_expression_count":96}

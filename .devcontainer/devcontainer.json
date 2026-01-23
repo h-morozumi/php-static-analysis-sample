@@ -1,0 +1,22 @@
+{
+    "name": "PHP Static Analysis Sample",
+    "image": "mcr.microsoft.com/devcontainers/php:1-8.2-bullseye",
+    "features": {
+        "ghcr.io/devcontainers/features/git:1": {}
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "bmewburn.vscode-intelephense-client",
+                "getpsalm.psalm-vscode-plugin",
+                "swordev.phpstan",
+                "EditorConfig.EditorConfig"
+            ],
+            "settings": {
+                "php.validate.executablePath": "/usr/local/bin/php"
+            }
+        }
+    },
+    "postCreateCommand": "composer install",
+    "remoteUser": "vscode"
+}

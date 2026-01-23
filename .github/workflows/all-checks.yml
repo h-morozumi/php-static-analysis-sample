@@ -105,7 +105,24 @@ jobs:
         run: composer install --prefer-dist --no-progress
 
       - name: Run PHPStan
-        run: composer run phpstan
+        continue-on-error: true
+        run: ./vendor/bin/phpstan analyse --no-progress --error-format=sarif > phpstan-results.sarif
+
+      - name: Upload PHPStan SARIF to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v3
+        if: always()
+        with:
+          sarif_file: phpstan-results.sarif
+          category: phpstan
+
+      - name: Check PHPStan Result
+        run: |
+          ERRORS=$(jq '.runs[0].results | length' phpstan-results.sarif)
+          echo "Found $ERRORS issue(s)"
+          if [ "$ERRORS" -gt 0 ]; then
+            echo "::error::PHPStan detected $ERRORS issue(s)!"
+            exit 1
+          fi
 
   psalm-taint-analysis:
     name: Psalm Security Taint Analysis

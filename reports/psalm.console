@@ -1,0 +1,231 @@
+INFO: MissingPropertyType - src/DatabaseVulnerability.php:11:13 - Property App\DatabaseVulnerability::$pdo does not have a declared type - consider mixed (see https://psalm.dev/045)
+    private $pdo;
+
+INFO: MissingParamType - src/DatabaseVulnerability.php:13:33 - Parameter $pdo has no provided type (see https://psalm.dev/154)
+    public function __construct($pdo)
+
+INFO: MissingReturnType - src/DatabaseVulnerability.php:22:21 - Method App\DatabaseVulnerability::getUserById does not have a return type (see https://psalm.dev/050)
+    public function getUserById($id)
+
+INFO: MissingParamType - src/DatabaseVulnerability.php:22:33 - Parameter $id has no provided type (see https://psalm.dev/154)
+    public function getUserById($id)
+
+INFO: MissingReturnType - src/DatabaseVulnerability.php:33:21 - Method App\DatabaseVulnerability::searchUsers does not have a return type (see https://psalm.dev/050)
+    public function searchUsers($name)
+
+INFO: MissingParamType - src/DatabaseVulnerability.php:33:33 - Parameter $name has no provided type (see https://psalm.dev/154)
+    public function searchUsers($name)
+
+INFO: MissingReturnType - src/DatabaseVulnerability.php:44:21 - Method App\DatabaseVulnerability::deleteUser does not have a return type (see https://psalm.dev/050)
+    public function deleteUser($userId)
+
+ERROR: PossiblyUnusedMethod - src/DatabaseVulnerability.php:44:21 - Cannot find any calls to method App\DatabaseVulnerability::deleteUser (see https://psalm.dev/087)
+    public function deleteUser($userId)
+
+INFO: MissingParamType - src/DatabaseVulnerability.php:44:32 - Parameter $userId has no provided type (see https://psalm.dev/154)
+    public function deleteUser($userId)
+
+ERROR: UnusedClass - src/DeadCodeVulnerability.php:9:7 - Class App\DeadCodeVulnerability is never used (see https://psalm.dev/075)
+class DeadCodeVulnerability
+
+INFO: MissingReturnType - src/DeadCodeVulnerability.php:15:21 - Method App\DeadCodeVulnerability::unreachableCode does not have a return type (see https://psalm.dev/050)
+    public function unreachableCode($value)
+
+INFO: MissingParamType - src/DeadCodeVulnerability.php:15:37 - Parameter $value has no provided type (see https://psalm.dev/154)
+    public function unreachableCode($value)
+
+ERROR: UnevaluatedCode - src/DeadCodeVulnerability.php:20:9 - Expressions after return/throw/continue (see https://psalm.dev/084)
+        echo "This will never execute";
+
+ERROR: UnevaluatedCode - src/DeadCodeVulnerability.php:21:9 - Expressions after return/throw/continue (see https://psalm.dev/084)
+        $unused = "dead code";
+
+INFO: MissingReturnType - src/DeadCodeVulnerability.php:28:22 - Method App\DeadCodeVulnerability::unusedMethod does not have a return type, expecting 'This method is never called' (see https://psalm.dev/050)
+    private function unusedMethod()
+
+INFO: MissingReturnType - src/DeadCodeVulnerability.php:37:21 - Method App\DeadCodeVulnerability::unusedVariable does not have a return type, expecting 'This is used' (see https://psalm.dev/050)
+    public function unusedVariable()
+
+ERROR: UnusedVariable - src/DeadCodeVulnerability.php:40:9 - $unused is never referenced or the value is not used (see https://psalm.dev/077)
+        $unused = "This is never used";
+
+INFO: MissingReturnType - src/DeadCodeVulnerability.php:49:21 - Method App\DeadCodeVulnerability::alwaysTrueCondition does not have a return type, expecting 'Always true'|'Never reached' (see https://psalm.dev/050)
+    public function alwaysTrueCondition()
+
+ERROR: RedundantCondition - src/DeadCodeVulnerability.php:52:13 - Type 10 for $x is always >= 5 (see https://psalm.dev/122)
+        if ($x > 5) {
+
+INFO: MissingReturnType - src/DeadCodeVulnerability.php:63:21 - Method App\DeadCodeVulnerability::infiniteLoop does not have a return type, expecting void (see https://psalm.dev/050)
+    public function infiniteLoop()
+
+ERROR: UnusedClass - src/EntryPoint.php:12:7 - Class App\EntryPoint is never used (see https://psalm.dev/075)
+class EntryPoint
+
+INFO: MissingReturnType - src/FileVulnerability.php:15:21 - Method App\FileVulnerability::readFile does not have a return type, expecting false|string (see https://psalm.dev/050)
+    public function readFile($filename)
+
+INFO: MissingParamType - src/FileVulnerability.php:15:30 - Parameter $filename has no provided type (see https://psalm.dev/154)
+    public function readFile($filename)
+
+INFO: MissingReturnType - src/FileVulnerability.php:26:21 - Method App\FileVulnerability::saveFile does not have a return type, expecting void (see https://psalm.dev/050)
+    public function saveFile($path, $content)
+
+INFO: MissingParamType - src/FileVulnerability.php:26:30 - Parameter $path has no provided type (see https://psalm.dev/154)
+    public function saveFile($path, $content)
+
+INFO: MissingParamType - src/FileVulnerability.php:26:37 - Parameter $content has no provided type (see https://psalm.dev/154)
+    public function saveFile($path, $content)
+
+INFO: MissingReturnType - src/FileVulnerability.php:36:21 - Method App\FileVulnerability::loadTemplate does not have a return type, expecting void (see https://psalm.dev/050)
+    public function loadTemplate($templateName)
+
+ERROR: PossiblyUnusedMethod - src/FileVulnerability.php:36:21 - Cannot find any calls to method App\FileVulnerability::loadTemplate (see https://psalm.dev/087)
+    public function loadTemplate($templateName)
+
+INFO: MissingParamType - src/FileVulnerability.php:36:34 - Parameter $templateName has no provided type (see https://psalm.dev/154)
+    public function loadTemplate($templateName)
+
+INFO: UnresolvableInclude - src/FileVulnerability.php:39:9 - Cannot resolve the given expression to a file path (see https://psalm.dev/106)
+        include $templateName . '.php';
+
+INFO: MissingReturnType - src/FileVulnerability.php:46:21 - Method App\FileVulnerability::handleUpload does not have a return type, expecting void (see https://psalm.dev/050)
+    public function handleUpload($uploadedFile)
+
+ERROR: PossiblyUnusedMethod - src/FileVulnerability.php:46:21 - Cannot find any calls to method App\FileVulnerability::handleUpload (see https://psalm.dev/087)
+    public function handleUpload($uploadedFile)
+
+INFO: MissingParamType - src/FileVulnerability.php:46:34 - Parameter $uploadedFile has no provided type (see https://psalm.dev/154)
+    public function handleUpload($uploadedFile)
+
+INFO: MissingReturnType - src/SecurityVulnerability.php:15:21 - Method App\SecurityVulnerability::generateToken does not have a return type, expecting non-falsy-string (see https://psalm.dev/050)
+    public function generateToken()
+
+ERROR: PossiblyUnusedMethod - src/SecurityVulnerability.php:15:21 - Cannot find any calls to method App\SecurityVulnerability::generateToken (see https://psalm.dev/087)
+    public function generateToken()
+
+ERROR: InvalidScalarArgument - src/SecurityVulnerability.php:18:20 - Argument 1 of md5 expects string, but int provided (see https://psalm.dev/012)
+        return md5(rand());
+
+INFO: MissingReturnType - src/SecurityVulnerability.php:25:21 - Method App\SecurityVulnerability::hashPassword does not have a return type, expecting non-falsy-string (see https://psalm.dev/050)
+    public function hashPassword($password)
+
+ERROR: PossiblyUnusedMethod - src/SecurityVulnerability.php:25:21 - Cannot find any calls to method App\SecurityVulnerability::hashPassword (see https://psalm.dev/087)
+    public function hashPassword($password)
+
+INFO: MissingParamType - src/SecurityVulnerability.php:25:34 - Parameter $password has no provided type (see https://psalm.dev/154)
+    public function hashPassword($password)
+
+INFO: MissingReturnType - src/SecurityVulnerability.php:35:21 - Method App\SecurityVulnerability::executeCode does not have a return type, expecting void (see https://psalm.dev/050)
+    public function executeCode($code)
+
+INFO: MissingParamType - src/SecurityVulnerability.php:35:33 - Parameter $code has no provided type (see https://psalm.dev/154)
+    public function executeCode($code)
+
+ERROR: PossiblyUnusedParam - src/SecurityVulnerability.php:35:33 - Param #1 is never referenced in this method (see https://psalm.dev/134)
+    public function executeCode($code)
+
+INFO: MissingReturnType - src/SecurityVulnerability.php:45:21 - Method App\SecurityVulnerability::pingHost does not have a return type, expecting false|null|string (see https://psalm.dev/050)
+    public function pingHost($host)
+
+INFO: MissingParamType - src/SecurityVulnerability.php:45:30 - Parameter $host has no provided type (see https://psalm.dev/154)
+    public function pingHost($host)
+
+ERROR: ForbiddenCode - src/SecurityVulnerability.php:48:19 - Unsafe shell_exec (see https://psalm.dev/002)
+        $output = shell_exec("ping -c 1 " . $host);
+
+INFO: MissingReturnType - src/SecurityVulnerability.php:56:21 - Method App\SecurityVulnerability::loadData does not have a return type (see https://psalm.dev/050)
+    public function loadData($serializedData)
+
+INFO: MissingParamType - src/SecurityVulnerability.php:56:30 - Parameter $serializedData has no provided type (see https://psalm.dev/154)
+    public function loadData($serializedData)
+
+INFO: MissingReturnType - src/SecurityVulnerability.php:66:21 - Method App\SecurityVulnerability::login does not have a return type, expecting void (see https://psalm.dev/050)
+    public function login($username, $password)
+
+ERROR: PossiblyUnusedMethod - src/SecurityVulnerability.php:66:21 - Cannot find any calls to method App\SecurityVulnerability::login (see https://psalm.dev/087)
+    public function login($username, $password)
+
+INFO: MissingParamType - src/SecurityVulnerability.php:66:27 - Parameter $username has no provided type (see https://psalm.dev/154)
+    public function login($username, $password)
+
+INFO: MissingParamType - src/SecurityVulnerability.php:66:38 - Parameter $password has no provided type (see https://psalm.dev/154)
+    public function login($username, $password)
+
+ERROR: PossiblyUnusedParam - src/SecurityVulnerability.php:66:38 - Param #2 is never referenced in this method (see https://psalm.dev/134)
+    public function login($username, $password)
+
+ERROR: UnusedClass - src/TypeSafetyVulnerability.php:9:7 - Class App\TypeSafetyVulnerability is never used (see https://psalm.dev/075)
+class TypeSafetyVulnerability
+
+INFO: MissingReturnType - src/TypeSafetyVulnerability.php:15:21 - Method App\TypeSafetyVulnerability::useUndefinedVariable does not have a return type, expecting bool (see https://psalm.dev/050)
+    public function useUndefinedVariable()
+
+ERROR: UndefinedVariable - src/TypeSafetyVulnerability.php:18:13 - Cannot find referenced variable $result (see https://psalm.dev/024)
+        if ($result > 0) {
+
+INFO: MissingReturnType - src/TypeSafetyVulnerability.php:28:21 - Method App\TypeSafetyVulnerability::getUserName does not have a return type (see https://psalm.dev/050)
+    public function getUserName($user)
+
+INFO: MissingParamType - src/TypeSafetyVulnerability.php:28:33 - Parameter $user has no provided type (see https://psalm.dev/154)
+    public function getUserName($user)
+
+INFO: MissingReturnType - src/TypeSafetyVulnerability.php:38:21 - Method App\TypeSafetyVulnerability::getData does not have a return type, expecting 'string data'|123 (see https://psalm.dev/050)
+    public function getData($flag)
+
+INFO: MissingParamType - src/TypeSafetyVulnerability.php:38:29 - Parameter $flag has no provided type (see https://psalm.dev/154)
+    public function getData($flag)
+
+INFO: MissingReturnType - src/TypeSafetyVulnerability.php:50:21 - Method App\TypeSafetyVulnerability::getConfigValue does not have a return type (see https://psalm.dev/050)
+    public function getConfigValue($config, $key)
+
+INFO: MissingParamType - src/TypeSafetyVulnerability.php:50:36 - Parameter $config has no provided type (see https://psalm.dev/154)
+    public function getConfigValue($config, $key)
+
+INFO: MissingParamType - src/TypeSafetyVulnerability.php:50:45 - Parameter $key has no provided type (see https://psalm.dev/154)
+    public function getConfigValue($config, $key)
+
+INFO: MissingReturnType - src/TypeSafetyVulnerability.php:60:21 - Method App\TypeSafetyVulnerability::calculateTotal does not have a return type (see https://psalm.dev/050)
+    public function calculateTotal($price, $quantity)
+
+INFO: MissingParamType - src/TypeSafetyVulnerability.php:60:36 - Parameter $price has no provided type (see https://psalm.dev/154)
+    public function calculateTotal($price, $quantity)
+
+INFO: MissingParamType - src/TypeSafetyVulnerability.php:60:44 - Parameter $quantity has no provided type (see https://psalm.dev/154)
+    public function calculateTotal($price, $quantity)
+
+INFO: MissingReturnType - src/TypeSafetyVulnerability.php:70:21 - Method App\TypeSafetyVulnerability::processOptionalData does not have a return type, expecting int<0, max> (see https://psalm.dev/050)
+    public function processOptionalData(?string $data)
+
+ERROR: PossiblyNullArgument - src/TypeSafetyVulnerability.php:73:23 - Argument 1 of strlen cannot be null, possibly null value provided (see https://psalm.dev/078)
+        return strlen($data);
+
+INFO: MissingReturnType - src/XssVulnerability.php:15:21 - Method App\XssVulnerability::displayUserInput does not have a return type, expecting void (see https://psalm.dev/050)
+    public function displayUserInput($userInput)
+
+INFO: MissingParamType - src/XssVulnerability.php:15:38 - Parameter $userInput has no provided type (see https://psalm.dev/154)
+    public function displayUserInput($userInput)
+
+INFO: MissingReturnType - src/XssVulnerability.php:25:21 - Method App\XssVulnerability::renderComment does not have a return type, expecting non-falsy-string (see https://psalm.dev/050)
+    public function renderComment($comment)
+
+INFO: MissingParamType - src/XssVulnerability.php:25:35 - Parameter $comment has no provided type (see https://psalm.dev/154)
+    public function renderComment($comment)
+
+INFO: MissingReturnType - src/XssVulnerability.php:34:21 - Method App\XssVulnerability::showMessage does not have a return type, expecting void (see https://psalm.dev/050)
+    public function showMessage($message)
+
+INFO: MissingParamType - src/XssVulnerability.php:34:33 - Parameter $message has no provided type (see https://psalm.dev/154)
+    public function showMessage($message)
+
+INFO: MissingReturnType - src/XssVulnerability.php:43:21 - Method App\XssVulnerability::createLink does not have a return type, expecting non-falsy-string (see https://psalm.dev/050)
+    public function createLink($url, $title)
+
+ERROR: PossiblyUnusedMethod - src/XssVulnerability.php:43:21 - Cannot find any calls to method App\XssVulnerability::createLink (see https://psalm.dev/087)
+    public function createLink($url, $title)
+
+INFO: MissingParamType - src/XssVulnerability.php:43:32 - Parameter $url has no provided type (see https://psalm.dev/154)
+    public function createLink($url, $title)
+
+INFO: MissingParamType - src/XssVulnerability.php:43:38 - Parameter $title has no provided type (see https://psalm.dev/154)
+    public function createLink($url, $title)
+

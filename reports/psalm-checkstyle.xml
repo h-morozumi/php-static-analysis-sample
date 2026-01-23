@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle>
+<file name="src/DatabaseVulnerability.php">
+ <error line="11" column="13" severity="info" message="MissingPropertyType: Property App\DatabaseVulnerability::$pdo does not have a declared type - consider mixed"/>
+</file>
+<file name="src/DatabaseVulnerability.php">
+ <error line="13" column="33" severity="info" message="MissingParamType: Parameter $pdo has no provided type"/>
+</file>
+<file name="src/DatabaseVulnerability.php">
+ <error line="22" column="21" severity="info" message="MissingReturnType: Method App\DatabaseVulnerability::getUserById does not have a return type"/>
+</file>
+<file name="src/DatabaseVulnerability.php">
+ <error line="22" column="33" severity="info" message="MissingParamType: Parameter $id has no provided type"/>
+</file>
+<file name="src/DatabaseVulnerability.php">
+ <error line="33" column="21" severity="info" message="MissingReturnType: Method App\DatabaseVulnerability::searchUsers does not have a return type"/>
+</file>
+<file name="src/DatabaseVulnerability.php">
+ <error line="33" column="33" severity="info" message="MissingParamType: Parameter $name has no provided type"/>
+</file>
+<file name="src/DatabaseVulnerability.php">
+ <error line="44" column="21" severity="info" message="MissingReturnType: Method App\DatabaseVulnerability::deleteUser does not have a return type"/>
+</file>
+<file name="src/DatabaseVulnerability.php">
+ <error line="44" column="21" severity="error" message="PossiblyUnusedMethod: Cannot find any calls to method App\DatabaseVulnerability::deleteUser"/>
+</file>
+<file name="src/DatabaseVulnerability.php">
+ <error line="44" column="32" severity="info" message="MissingParamType: Parameter $userId has no provided type"/>
+</file>
+<file name="src/DeadCodeVulnerability.php">
+ <error line="9" column="7" severity="error" message="UnusedClass: Class App\DeadCodeVulnerability is never used"/>
+</file>
+<file name="src/DeadCodeVulnerability.php">
+ <error line="15" column="21" severity="info" message="MissingReturnType: Method App\DeadCodeVulnerability::unreachableCode does not have a return type"/>
+</file>
+<file name="src/DeadCodeVulnerability.php">
+ <error line="15" column="37" severity="info" message="MissingParamType: Parameter $value has no provided type"/>
+</file>
+<file name="src/DeadCodeVulnerability.php">
+ <error line="20" column="9" severity="error" message="UnevaluatedCode: Expressions after return/throw/continue"/>
+</file>
+<file name="src/DeadCodeVulnerability.php">
+ <error line="21" column="9" severity="error" message="UnevaluatedCode: Expressions after return/throw/continue"/>
+</file>
+<file name="src/DeadCodeVulnerability.php">
+ <error line="28" column="22" severity="info" message="MissingReturnType: Method App\DeadCodeVulnerability::unusedMethod does not have a return type, expecting &apos;This method is never called&apos;"/>
+</file>
+<file name="src/DeadCodeVulnerability.php">
+ <error line="37" column="21" severity="info" message="MissingReturnType: Method App\DeadCodeVulnerability::unusedVariable does not have a return type, expecting &apos;This is used&apos;"/>
+</file>
+<file name="src/DeadCodeVulnerability.php">
+ <error line="40" column="9" severity="error" message="UnusedVariable: $unused is never referenced or the value is not used"/>
+</file>
+<file name="src/DeadCodeVulnerability.php">
+ <error line="49" column="21" severity="info" message="MissingReturnType: Method App\DeadCodeVulnerability::alwaysTrueCondition does not have a return type, expecting &apos;Always true&apos;|&apos;Never reached&apos;"/>
+</file>
+<file name="src/DeadCodeVulnerability.php">
+ <error line="52" column="13" severity="error" message="RedundantCondition: Type 10 for $x is always &gt;= 5"/>
+</file>
+<file name="src/DeadCodeVulnerability.php">
+ <error line="63" column="21" severity="info" message="MissingReturnType: Method App\DeadCodeVulnerability::infiniteLoop does not have a return type, expecting void"/>
+</file>
+<file name="src/EntryPoint.php">
+ <error line="12" column="7" severity="error" message="UnusedClass: Class App\EntryPoint is never used"/>
+</file>
+<file name="src/FileVulnerability.php">
+ <error line="15" column="21" severity="info" message="MissingReturnType: Method App\FileVulnerability::readFile does not have a return type, expecting false|string"/>
+</file>
+<file name="src/FileVulnerability.php">
+ <error line="15" column="30" severity="info" message="MissingParamType: Parameter $filename has no provided type"/>
+</file>
+<file name="src/FileVulnerability.php">
+ <error line="26" column="21" severity="info" message="MissingReturnType: Method App\FileVulnerability::saveFile does not have a return type, expecting void"/>
+</file>
+<file name="src/FileVulnerability.php">
+ <error line="26" column="30" severity="info" message="MissingParamType: Parameter $path has no provided type"/>
+</file>
+<file name="src/FileVulnerability.php">
+ <error line="26" column="37" severity="info" message="MissingParamType: Parameter $content has no provided type"/>
+</file>
+<file name="src/FileVulnerability.php">
+ <error line="36" column="21" severity="info" message="MissingReturnType: Method App\FileVulnerability::loadTemplate does not have a return type, expecting void"/>
+</file>
+<file name="src/FileVulnerability.php">
+ <error line="36" column="21" severity="error" message="PossiblyUnusedMethod: Cannot find any calls to method App\FileVulnerability::loadTemplate"/>
+</file>
+<file name="src/FileVulnerability.php">
+ <error line="36" column="34" severity="info" message="MissingParamType: Parameter $templateName has no provided type"/>
+</file>
+<file name="src/FileVulnerability.php">
+ <error line="39" column="9" severity="info" message="UnresolvableInclude: Cannot resolve the given expression to a file path"/>
+</file>
+<file name="src/FileVulnerability.php">
+ <error line="46" column="21" severity="info" message="MissingReturnType: Method App\FileVulnerability::handleUpload does not have a return type, expecting void"/>
+</file>
+<file name="src/FileVulnerability.php">
+ <error line="46" column="21" severity="error" message="PossiblyUnusedMethod: Cannot find any calls to method App\FileVulnerability::handleUpload"/>
+</file>
+<file name="src/FileVulnerability.php">
+ <error line="46" column="34" severity="info" message="MissingParamType: Parameter $uploadedFile has no provided type"/>
+</file>
+<file name="src/SecurityVulnerability.php">
+ <error line="15" column="21" severity="info" message="MissingReturnType: Method App\SecurityVulnerability::generateToken does not have a return type, expecting non-falsy-string"/>
+</file>
+<file name="src/SecurityVulnerability.php">
+ <error line="15" column="21" severity="error" message="PossiblyUnusedMethod: Cannot find any calls to method App\SecurityVulnerability::generateToken"/>
+</file>
+<file name="src/SecurityVulnerability.php">
+ <error line="18" column="20" severity="error" message="InvalidScalarArgument: Argument 1 of md5 expects string, but int provided"/>
+</file>
+<file name="src/SecurityVulnerability.php">
+ <error line="25" column="21" severity="info" message="MissingReturnType: Method App\SecurityVulnerability::hashPassword does not have a return type, expecting non-falsy-string"/>
+</file>
+<file name="src/SecurityVulnerability.php">
+ <error line="25" column="21" severity="error" message="PossiblyUnusedMethod: Cannot find any calls to method App\SecurityVulnerability::hashPassword"/>
+</file>
+<file name="src/SecurityVulnerability.php">
+ <error line="25" column="34" severity="info" message="MissingParamType: Parameter $password has no provided type"/>
+</file>
+<file name="src/SecurityVulnerability.php">
+ <error line="35" column="21" severity="info" message="MissingReturnType: Method App\SecurityVulnerability::executeCode does not have a return type, expecting void"/>
+</file>
+<file name="src/SecurityVulnerability.php">
+ <error line="35" column="33" severity="info" message="MissingParamType: Parameter $code has no provided type"/>
+</file>
+<file name="src/SecurityVulnerability.php">
+ <error line="35" column="33" severity="error" message="PossiblyUnusedParam: Param #1 is never referenced in this method"/>
+</file>
+<file name="src/SecurityVulnerability.php">
+ <error line="45" column="21" severity="info" message="MissingReturnType: Method App\SecurityVulnerability::pingHost does not have a return type, expecting false|null|string"/>
+</file>
+<file name="src/SecurityVulnerability.php">
+ <error line="45" column="30" severity="info" message="MissingParamType: Parameter $host has no provided type"/>
+</file>
+<file name="src/SecurityVulnerability.php">
+ <error line="48" column="19" severity="error" message="ForbiddenCode: Unsafe shell_exec"/>
+</file>
+<file name="src/SecurityVulnerability.php">
+ <error line="56" column="21" severity="info" message="MissingReturnType: Method App\SecurityVulnerability::loadData does not have a return type"/>
+</file>
+<file name="src/SecurityVulnerability.php">
+ <error line="56" column="30" severity="info" message="MissingParamType: Parameter $serializedData has no provided type"/>
+</file>
+<file name="src/SecurityVulnerability.php">
+ <error line="66" column="21" severity="info" message="MissingReturnType: Method App\SecurityVulnerability::login does not have a return type, expecting void"/>
+</file>
+<file name="src/SecurityVulnerability.php">
+ <error line="66" column="21" severity="error" message="PossiblyUnusedMethod: Cannot find any calls to method App\SecurityVulnerability::login"/>
+</file>
+<file name="src/SecurityVulnerability.php">
+ <error line="66" column="27" severity="info" message="MissingParamType: Parameter $username has no provided type"/>
+</file>
+<file name="src/SecurityVulnerability.php">
+ <error line="66" column="38" severity="info" message="MissingParamType: Parameter $password has no provided type"/>
+</file>
+<file name="src/SecurityVulnerability.php">
+ <error line="66" column="38" severity="error" message="PossiblyUnusedParam: Param #2 is never referenced in this method"/>
+</file>
+<file name="src/TypeSafetyVulnerability.php">
+ <error line="9" column="7" severity="error" message="UnusedClass: Class App\TypeSafetyVulnerability is never used"/>
+</file>
+<file name="src/TypeSafetyVulnerability.php">
+ <error line="15" column="21" severity="info" message="MissingReturnType: Method App\TypeSafetyVulnerability::useUndefinedVariable does not have a return type, expecting bool"/>
+</file>
+<file name="src/TypeSafetyVulnerability.php">
+ <error line="18" column="13" severity="error" message="UndefinedVariable: Cannot find referenced variable $result"/>
+</file>
+<file name="src/TypeSafetyVulnerability.php">
+ <error line="28" column="21" severity="info" message="MissingReturnType: Method App\TypeSafetyVulnerability::getUserName does not have a return type"/>
+</file>
+<file name="src/TypeSafetyVulnerability.php">
+ <error line="28" column="33" severity="info" message="MissingParamType: Parameter $user has no provided type"/>
+</file>
+<file name="src/TypeSafetyVulnerability.php">
+ <error line="38" column="21" severity="info" message="MissingReturnType: Method App\TypeSafetyVulnerability::getData does not have a return type, expecting &apos;string data&apos;|123"/>
+</file>
+<file name="src/TypeSafetyVulnerability.php">
+ <error line="38" column="29" severity="info" message="MissingParamType: Parameter $flag has no provided type"/>
+</file>
+<file name="src/TypeSafetyVulnerability.php">
+ <error line="50" column="21" severity="info" message="MissingReturnType: Method App\TypeSafetyVulnerability::getConfigValue does not have a return type"/>
+</file>
+<file name="src/TypeSafetyVulnerability.php">
+ <error line="50" column="36" severity="info" message="MissingParamType: Parameter $config has no provided type"/>
+</file>
+<file name="src/TypeSafetyVulnerability.php">
+ <error line="50" column="45" severity="info" message="MissingParamType: Parameter $key has no provided type"/>
+</file>
+<file name="src/TypeSafetyVulnerability.php">
+ <error line="60" column="21" severity="info" message="MissingReturnType: Method App\TypeSafetyVulnerability::calculateTotal does not have a return type"/>
+</file>
+<file name="src/TypeSafetyVulnerability.php">
+ <error line="60" column="36" severity="info" message="MissingParamType: Parameter $price has no provided type"/>
+</file>
+<file name="src/TypeSafetyVulnerability.php">
+ <error line="60" column="44" severity="info" message="MissingParamType: Parameter $quantity has no provided type"/>
+</file>
+<file name="src/TypeSafetyVulnerability.php">
+ <error line="70" column="21" severity="info" message="MissingReturnType: Method App\TypeSafetyVulnerability::processOptionalData does not have a return type, expecting int&lt;0, max&gt;"/>
+</file>
+<file name="src/TypeSafetyVulnerability.php">
+ <error line="73" column="23" severity="error" message="PossiblyNullArgument: Argument 1 of strlen cannot be null, possibly null value provided"/>
+</file>
+<file name="src/XssVulnerability.php">
+ <error line="15" column="21" severity="info" message="MissingReturnType: Method App\XssVulnerability::displayUserInput does not have a return type, expecting void"/>
+</file>
+<file name="src/XssVulnerability.php">
+ <error line="15" column="38" severity="info" message="MissingParamType: Parameter $userInput has no provided type"/>
+</file>
+<file name="src/XssVulnerability.php">
+ <error line="25" column="21" severity="info" message="MissingReturnType: Method App\XssVulnerability::renderComment does not have a return type, expecting non-falsy-string"/>
+</file>
+<file name="src/XssVulnerability.php">
+ <error line="25" column="35" severity="info" message="MissingParamType: Parameter $comment has no provided type"/>
+</file>
+<file name="src/XssVulnerability.php">
+ <error line="34" column="21" severity="info" message="MissingReturnType: Method App\XssVulnerability::showMessage does not have a return type, expecting void"/>
+</file>
+<file name="src/XssVulnerability.php">
+ <error line="34" column="33" severity="info" message="MissingParamType: Parameter $message has no provided type"/>
+</file>
+<file name="src/XssVulnerability.php">
+ <error line="43" column="21" severity="info" message="MissingReturnType: Method App\XssVulnerability::createLink does not have a return type, expecting non-falsy-string"/>
+</file>
+<file name="src/XssVulnerability.php">
+ <error line="43" column="21" severity="error" message="PossiblyUnusedMethod: Cannot find any calls to method App\XssVulnerability::createLink"/>
+</file>
+<file name="src/XssVulnerability.php">
+ <error line="43" column="32" severity="info" message="MissingParamType: Parameter $url has no provided type"/>
+</file>
+<file name="src/XssVulnerability.php">
+ <error line="43" column="38" severity="info" message="MissingParamType: Parameter $title has no provided type"/>
+</file>
+</checkstyle>

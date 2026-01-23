@@ -1,0 +1,11 @@
+/workspaces/php-static-analysis-sample/src/EntryPoint.php:45:14:error - TaintedHtml: Detected tainted HTML
+/workspaces/php-static-analysis-sample/src/EntryPoint.php:45:14:error - TaintedTextWithQuotes: Detected tainted text with possible quotes
+/workspaces/php-static-analysis-sample/src/FileVulnerability.php:19:34:error - TaintedFile: Detected tainted file handling
+/workspaces/php-static-analysis-sample/src/FileVulnerability.php:29:27:error - TaintedFile: Detected tainted file handling
+/workspaces/php-static-analysis-sample/src/SecurityVulnerability.php:38:14:error - TaintedEval: Detected tainted code passed to eval or similar
+/workspaces/php-static-analysis-sample/src/SecurityVulnerability.php:48:30:error - TaintedShell: Detected tainted shell code
+/workspaces/php-static-analysis-sample/src/SecurityVulnerability.php:59:28:error - TaintedUnserialize: Detected tainted code passed to unserialize or similar
+/workspaces/php-static-analysis-sample/src/XssVulnerability.php:18:14:error - TaintedHtml: Detected tainted HTML
+/workspaces/php-static-analysis-sample/src/XssVulnerability.php:18:14:error - TaintedTextWithQuotes: Detected tainted text with possible quotes
+/workspaces/php-static-analysis-sample/src/XssVulnerability.php:36:14:error - TaintedHtml: Detected tainted HTML
+/workspaces/php-static-analysis-sample/src/XssVulnerability.php:36:14:error - TaintedTextWithQuotes: Detected tainted text with possible quotes

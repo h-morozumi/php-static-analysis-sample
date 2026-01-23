@@ -1,0 +1,1318 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<report>
+  <item>
+    <severity>error</severity>
+    <line_from>45</line_from>
+    <line_to>45</line_to>
+    <type>TaintedHtml</type>
+    <message>Detected tainted HTML</message>
+    <file_name>src/EntryPoint.php</file_name>
+    <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+    <snippet>        echo $xss-&gt;renderComment($comment);</snippet>
+    <selected_text>$xss-&gt;renderComment($comment)</selected_text>
+    <from>1276</from>
+    <to>1305</to>
+    <snippet_from>1263</snippet_from>
+    <snippet_to>1306</snippet_to>
+    <column_from>14</column_from>
+    <column_to>43</column_to>
+    <error_level>-2</error_level>
+    <shortcode>245</shortcode>
+    <link>https://psalm.dev/245</link>
+    <taint_trace>
+      <label>$_POST</label>
+      <entry_path_type></entry_path_type>
+    </taint_trace>
+    <taint_trace>
+      <line_from>44</line_from>
+      <line_to>44</line_to>
+      <label>$_POST['comment']</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        $comment = $_POST['comment'];</snippet>
+      <from>1244</from>
+      <to>1250</to>
+      <snippet_from>1225</snippet_from>
+      <column_from>20</column_from>
+      <column_to>26</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>44</line_from>
+      <line_to>44</line_to>
+      <label>$comment</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        $comment = $_POST['comment'];</snippet>
+      <from>1233</from>
+      <to>1241</to>
+      <snippet_from>1225</snippet_from>
+      <column_from>9</column_from>
+      <column_to>17</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>45</line_from>
+      <line_to>45</line_to>
+      <label>call to App\XssVulnerability::renderComment</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        echo $xss-&gt;renderComment($comment);</snippet>
+      <from>1296</from>
+      <to>1304</to>
+      <snippet_from>1263</snippet_from>
+      <column_from>34</column_from>
+      <column_to>42</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>25</line_from>
+      <line_to>25</line_to>
+      <label>App\XssVulnerability::renderComment#1</label>
+      <file_name>src/XssVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+      <snippet>    public function renderComment($comment)</snippet>
+      <from>659</from>
+      <to>667</to>
+      <snippet_from>625</snippet_from>
+      <column_from>35</column_from>
+      <column_to>43</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>25</line_from>
+      <line_to>25</line_to>
+      <label>$comment</label>
+      <file_name>src/XssVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+      <snippet>    public function renderComment($comment)</snippet>
+      <from>659</from>
+      <to>667</to>
+      <snippet_from>625</snippet_from>
+      <column_from>35</column_from>
+      <column_to>43</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>27</line_from>
+      <line_to>27</line_to>
+      <label>concat</label>
+      <file_name>src/XssVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+      <snippet>        return "&lt;p class='comment'&gt;" . $comment . "&lt;/p&gt;";</snippet>
+      <from>690</from>
+      <to>722</to>
+      <snippet_from>675</snippet_from>
+      <column_from>16</column_from>
+      <column_to>48</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>27</line_from>
+      <line_to>27</line_to>
+      <label>concat</label>
+      <file_name>src/XssVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+      <snippet>        return "&lt;p class='comment'&gt;" . $comment . "&lt;/p&gt;";</snippet>
+      <from>690</from>
+      <to>731</to>
+      <snippet_from>675</snippet_from>
+      <column_from>16</column_from>
+      <column_to>57</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>25</line_from>
+      <line_to>25</line_to>
+      <label>App\XssVulnerability::renderComment</label>
+      <file_name>src/XssVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+      <snippet>    public function renderComment($comment)</snippet>
+      <from>645</from>
+      <to>658</to>
+      <snippet_from>625</snippet_from>
+      <column_from>21</column_from>
+      <column_to>34</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>45</line_from>
+      <line_to>45</line_to>
+      <label>call to echo</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        echo $xss-&gt;renderComment($comment);</snippet>
+      <from>1276</from>
+      <to>1305</to>
+      <snippet_from>1263</snippet_from>
+      <column_from>14</column_from>
+      <column_to>43</column_to>
+    </taint_trace>
+    <other_references></other_references>
+  </item>
+  <item>
+    <severity>error</severity>
+    <line_from>45</line_from>
+    <line_to>45</line_to>
+    <type>TaintedTextWithQuotes</type>
+    <message>Detected tainted text with possible quotes</message>
+    <file_name>src/EntryPoint.php</file_name>
+    <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+    <snippet>        echo $xss-&gt;renderComment($comment);</snippet>
+    <selected_text>$xss-&gt;renderComment($comment)</selected_text>
+    <from>1276</from>
+    <to>1305</to>
+    <snippet_from>1263</snippet_from>
+    <snippet_to>1306</snippet_to>
+    <column_from>14</column_from>
+    <column_to>43</column_to>
+    <error_level>-2</error_level>
+    <shortcode>274</shortcode>
+    <link>https://psalm.dev/274</link>
+    <taint_trace>
+      <label>$_POST</label>
+      <entry_path_type></entry_path_type>
+    </taint_trace>
+    <taint_trace>
+      <line_from>44</line_from>
+      <line_to>44</line_to>
+      <label>$_POST['comment']</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        $comment = $_POST['comment'];</snippet>
+      <from>1244</from>
+      <to>1250</to>
+      <snippet_from>1225</snippet_from>
+      <column_from>20</column_from>
+      <column_to>26</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>44</line_from>
+      <line_to>44</line_to>
+      <label>$comment</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        $comment = $_POST['comment'];</snippet>
+      <from>1233</from>
+      <to>1241</to>
+      <snippet_from>1225</snippet_from>
+      <column_from>9</column_from>
+      <column_to>17</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>45</line_from>
+      <line_to>45</line_to>
+      <label>call to App\XssVulnerability::renderComment</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        echo $xss-&gt;renderComment($comment);</snippet>
+      <from>1296</from>
+      <to>1304</to>
+      <snippet_from>1263</snippet_from>
+      <column_from>34</column_from>
+      <column_to>42</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>25</line_from>
+      <line_to>25</line_to>
+      <label>App\XssVulnerability::renderComment#1</label>
+      <file_name>src/XssVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+      <snippet>    public function renderComment($comment)</snippet>
+      <from>659</from>
+      <to>667</to>
+      <snippet_from>625</snippet_from>
+      <column_from>35</column_from>
+      <column_to>43</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>25</line_from>
+      <line_to>25</line_to>
+      <label>$comment</label>
+      <file_name>src/XssVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+      <snippet>    public function renderComment($comment)</snippet>
+      <from>659</from>
+      <to>667</to>
+      <snippet_from>625</snippet_from>
+      <column_from>35</column_from>
+      <column_to>43</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>27</line_from>
+      <line_to>27</line_to>
+      <label>concat</label>
+      <file_name>src/XssVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+      <snippet>        return "&lt;p class='comment'&gt;" . $comment . "&lt;/p&gt;";</snippet>
+      <from>690</from>
+      <to>722</to>
+      <snippet_from>675</snippet_from>
+      <column_from>16</column_from>
+      <column_to>48</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>27</line_from>
+      <line_to>27</line_to>
+      <label>concat</label>
+      <file_name>src/XssVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+      <snippet>        return "&lt;p class='comment'&gt;" . $comment . "&lt;/p&gt;";</snippet>
+      <from>690</from>
+      <to>731</to>
+      <snippet_from>675</snippet_from>
+      <column_from>16</column_from>
+      <column_to>57</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>25</line_from>
+      <line_to>25</line_to>
+      <label>App\XssVulnerability::renderComment</label>
+      <file_name>src/XssVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+      <snippet>    public function renderComment($comment)</snippet>
+      <from>645</from>
+      <to>658</to>
+      <snippet_from>625</snippet_from>
+      <column_from>21</column_from>
+      <column_to>34</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>45</line_from>
+      <line_to>45</line_to>
+      <label>call to echo</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        echo $xss-&gt;renderComment($comment);</snippet>
+      <from>1276</from>
+      <to>1305</to>
+      <snippet_from>1263</snippet_from>
+      <column_from>14</column_from>
+      <column_to>43</column_to>
+    </taint_trace>
+    <other_references></other_references>
+  </item>
+  <item>
+    <severity>error</severity>
+    <line_from>19</line_from>
+    <line_to>19</line_to>
+    <type>TaintedFile</type>
+    <message>Detected tainted file handling</message>
+    <file_name>src/FileVulnerability.php</file_name>
+    <file_path>/workspaces/php-static-analysis-sample/src/FileVulnerability.php</file_path>
+    <snippet>        return file_get_contents($filename);</snippet>
+    <selected_text>$filename</selected_text>
+    <from>456</from>
+    <to>465</to>
+    <snippet_from>423</snippet_from>
+    <snippet_to>467</snippet_to>
+    <column_from>34</column_from>
+    <column_to>43</column_to>
+    <error_level>-2</error_level>
+    <shortcode>255</shortcode>
+    <link>https://psalm.dev/255</link>
+    <taint_trace>
+      <label>$_GET</label>
+      <entry_path_type></entry_path_type>
+    </taint_trace>
+    <taint_trace>
+      <line_from>78</line_from>
+      <line_to>78</line_to>
+      <label>$_GET['file']</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        $filename = $_GET['file'];</snippet>
+      <from>2299</from>
+      <to>2304</to>
+      <snippet_from>2279</snippet_from>
+      <column_from>21</column_from>
+      <column_to>26</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>78</line_from>
+      <line_to>78</line_to>
+      <label>$filename</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        $filename = $_GET['file'];</snippet>
+      <from>2287</from>
+      <to>2296</to>
+      <snippet_from>2279</snippet_from>
+      <column_from>9</column_from>
+      <column_to>18</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>79</line_from>
+      <line_to>79</line_to>
+      <label>call to App\FileVulnerability::readFile</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        $file-&gt;readFile($filename);</snippet>
+      <from>2338</from>
+      <to>2347</to>
+      <snippet_from>2314</snippet_from>
+      <column_from>25</column_from>
+      <column_to>34</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>15</line_from>
+      <line_to>15</line_to>
+      <label>App\FileVulnerability::readFile#1</label>
+      <file_name>src/FileVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/FileVulnerability.php</file_path>
+      <snippet>    public function readFile($filename)</snippet>
+      <from>289</from>
+      <to>298</to>
+      <snippet_from>260</snippet_from>
+      <column_from>30</column_from>
+      <column_to>39</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>15</line_from>
+      <line_to>15</line_to>
+      <label>$filename</label>
+      <file_name>src/FileVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/FileVulnerability.php</file_path>
+      <snippet>    public function readFile($filename)</snippet>
+      <from>289</from>
+      <to>298</to>
+      <snippet_from>260</snippet_from>
+      <column_from>30</column_from>
+      <column_to>39</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>19</line_from>
+      <line_to>19</line_to>
+      <label>call to file_get_contents</label>
+      <file_name>src/FileVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/FileVulnerability.php</file_path>
+      <snippet>        return file_get_contents($filename);</snippet>
+      <from>456</from>
+      <to>465</to>
+      <snippet_from>423</snippet_from>
+      <column_from>34</column_from>
+      <column_to>43</column_to>
+    </taint_trace>
+    <other_references></other_references>
+  </item>
+  <item>
+    <severity>error</severity>
+    <line_from>29</line_from>
+    <line_to>29</line_to>
+    <type>TaintedFile</type>
+    <message>Detected tainted file handling</message>
+    <file_name>src/FileVulnerability.php</file_name>
+    <file_path>/workspaces/php-static-analysis-sample/src/FileVulnerability.php</file_path>
+    <snippet>        file_put_contents($path, $content);</snippet>
+    <selected_text>$path</selected_text>
+    <from>700</from>
+    <to>705</to>
+    <snippet_from>674</snippet_from>
+    <snippet_to>717</snippet_to>
+    <column_from>27</column_from>
+    <column_to>32</column_to>
+    <error_level>-2</error_level>
+    <shortcode>255</shortcode>
+    <link>https://psalm.dev/255</link>
+    <taint_trace>
+      <label>$_POST</label>
+      <entry_path_type></entry_path_type>
+    </taint_trace>
+    <taint_trace>
+      <line_from>82</line_from>
+      <line_to>82</line_to>
+      <label>$_POST['path']</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        $path = $_POST['path'];</snippet>
+      <from>2445</from>
+      <to>2451</to>
+      <snippet_from>2429</snippet_from>
+      <column_from>17</column_from>
+      <column_to>23</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>82</line_from>
+      <line_to>82</line_to>
+      <label>$path</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        $path = $_POST['path'];</snippet>
+      <from>2437</from>
+      <to>2442</to>
+      <snippet_from>2429</snippet_from>
+      <column_from>9</column_from>
+      <column_to>14</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>84</line_from>
+      <line_to>84</line_to>
+      <label>call to App\FileVulnerability::saveFile</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        $file-&gt;saveFile($path, $content);</snippet>
+      <from>2523</from>
+      <to>2528</to>
+      <snippet_from>2499</snippet_from>
+      <column_from>25</column_from>
+      <column_to>30</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>26</line_from>
+      <line_to>26</line_to>
+      <label>App\FileVulnerability::saveFile#1</label>
+      <file_name>src/FileVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/FileVulnerability.php</file_path>
+      <snippet>    public function saveFile($path, $content)</snippet>
+      <from>615</from>
+      <to>620</to>
+      <snippet_from>586</snippet_from>
+      <column_from>30</column_from>
+      <column_to>35</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>26</line_from>
+      <line_to>26</line_to>
+      <label>$path</label>
+      <file_name>src/FileVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/FileVulnerability.php</file_path>
+      <snippet>    public function saveFile($path, $content)</snippet>
+      <from>615</from>
+      <to>620</to>
+      <snippet_from>586</snippet_from>
+      <column_from>30</column_from>
+      <column_to>35</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>29</line_from>
+      <line_to>29</line_to>
+      <label>call to file_put_contents</label>
+      <file_name>src/FileVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/FileVulnerability.php</file_path>
+      <snippet>        file_put_contents($path, $content);</snippet>
+      <from>700</from>
+      <to>705</to>
+      <snippet_from>674</snippet_from>
+      <column_from>27</column_from>
+      <column_to>32</column_to>
+    </taint_trace>
+    <other_references></other_references>
+  </item>
+  <item>
+    <severity>error</severity>
+    <line_from>38</line_from>
+    <line_to>38</line_to>
+    <type>TaintedEval</type>
+    <message>Detected tainted code passed to eval or similar</message>
+    <file_name>src/SecurityVulnerability.php</file_name>
+    <file_path>/workspaces/php-static-analysis-sample/src/SecurityVulnerability.php</file_path>
+    <snippet>        eval($code);</snippet>
+    <selected_text>$code</selected_text>
+    <from>803</from>
+    <to>808</to>
+    <snippet_from>790</snippet_from>
+    <snippet_to>810</snippet_to>
+    <column_from>14</column_from>
+    <column_to>19</column_to>
+    <error_level>-2</error_level>
+    <shortcode>252</shortcode>
+    <link>https://psalm.dev/252</link>
+    <taint_trace>
+      <label>$_POST</label>
+      <entry_path_type></entry_path_type>
+    </taint_trace>
+    <taint_trace>
+      <line_from>65</line_from>
+      <line_to>65</line_to>
+      <label>$_POST['code']</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        $code = $_POST['code'];</snippet>
+      <from>1931</from>
+      <to>1937</to>
+      <snippet_from>1915</snippet_from>
+      <column_from>17</column_from>
+      <column_to>23</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>65</line_from>
+      <line_to>65</line_to>
+      <label>$code</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        $code = $_POST['code'];</snippet>
+      <from>1923</from>
+      <to>1928</to>
+      <snippet_from>1915</snippet_from>
+      <column_from>9</column_from>
+      <column_to>14</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>66</line_from>
+      <line_to>66</line_to>
+      <label>call to App\SecurityVulnerability::executeCode</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        $security-&gt;executeCode($code);</snippet>
+      <from>1978</from>
+      <to>1983</to>
+      <snippet_from>1947</snippet_from>
+      <column_from>32</column_from>
+      <column_to>37</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>35</line_from>
+      <line_to>35</line_to>
+      <label>App\SecurityVulnerability::executeCode#1</label>
+      <file_name>src/SecurityVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/SecurityVulnerability.php</file_path>
+      <snippet>    public function executeCode($code)</snippet>
+      <from>707</from>
+      <to>712</to>
+      <snippet_from>675</snippet_from>
+      <column_from>33</column_from>
+      <column_to>38</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>35</line_from>
+      <line_to>35</line_to>
+      <label>$code</label>
+      <file_name>src/SecurityVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/SecurityVulnerability.php</file_path>
+      <snippet>    public function executeCode($code)</snippet>
+      <from>707</from>
+      <to>712</to>
+      <snippet_from>675</snippet_from>
+      <column_from>33</column_from>
+      <column_to>38</column_to>
+    </taint_trace>
+    <other_references></other_references>
+  </item>
+  <item>
+    <severity>error</severity>
+    <line_from>48</line_from>
+    <line_to>48</line_to>
+    <type>TaintedShell</type>
+    <message>Detected tainted shell code</message>
+    <file_name>src/SecurityVulnerability.php</file_name>
+    <file_path>/workspaces/php-static-analysis-sample/src/SecurityVulnerability.php</file_path>
+    <snippet>        $output = shell_exec("ping -c 1 " . $host);</snippet>
+    <selected_text>"ping -c 1 " . $host</selected_text>
+    <from>1057</from>
+    <to>1077</to>
+    <snippet_from>1028</snippet_from>
+    <snippet_to>1079</snippet_to>
+    <column_from>30</column_from>
+    <column_to>50</column_to>
+    <error_level>-2</error_level>
+    <shortcode>246</shortcode>
+    <link>https://psalm.dev/246</link>
+    <taint_trace>
+      <label>$_GET</label>
+      <entry_path_type></entry_path_type>
+    </taint_trace>
+    <taint_trace>
+      <line_from>61</line_from>
+      <line_to>61</line_to>
+      <label>$_GET['host']</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        $host = $_GET['host'];</snippet>
+      <from>1784</from>
+      <to>1789</to>
+      <snippet_from>1768</snippet_from>
+      <column_from>17</column_from>
+      <column_to>22</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>61</line_from>
+      <line_to>61</line_to>
+      <label>$host</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        $host = $_GET['host'];</snippet>
+      <from>1776</from>
+      <to>1781</to>
+      <snippet_from>1768</snippet_from>
+      <column_from>9</column_from>
+      <column_to>14</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>62</line_from>
+      <line_to>62</line_to>
+      <label>call to App\SecurityVulnerability::pingHost</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        $security-&gt;pingHost($host);</snippet>
+      <from>1827</from>
+      <to>1832</to>
+      <snippet_from>1799</snippet_from>
+      <column_from>29</column_from>
+      <column_to>34</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>45</line_from>
+      <line_to>45</line_to>
+      <label>App\SecurityVulnerability::pingHost#1</label>
+      <file_name>src/SecurityVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/SecurityVulnerability.php</file_path>
+      <snippet>    public function pingHost($host)</snippet>
+      <from>952</from>
+      <to>957</to>
+      <snippet_from>923</snippet_from>
+      <column_from>30</column_from>
+      <column_to>35</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>45</line_from>
+      <line_to>45</line_to>
+      <label>$host</label>
+      <file_name>src/SecurityVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/SecurityVulnerability.php</file_path>
+      <snippet>    public function pingHost($host)</snippet>
+      <from>952</from>
+      <to>957</to>
+      <snippet_from>923</snippet_from>
+      <column_from>30</column_from>
+      <column_to>35</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>48</line_from>
+      <line_to>48</line_to>
+      <label>concat</label>
+      <file_name>src/SecurityVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/SecurityVulnerability.php</file_path>
+      <snippet>        $output = shell_exec("ping -c 1 " . $host);</snippet>
+      <from>1057</from>
+      <to>1077</to>
+      <snippet_from>1028</snippet_from>
+      <column_from>30</column_from>
+      <column_to>50</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>48</line_from>
+      <line_to>48</line_to>
+      <label>call to shell_exec</label>
+      <file_name>src/SecurityVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/SecurityVulnerability.php</file_path>
+      <snippet>        $output = shell_exec("ping -c 1 " . $host);</snippet>
+      <from>1057</from>
+      <to>1077</to>
+      <snippet_from>1028</snippet_from>
+      <column_from>30</column_from>
+      <column_to>50</column_to>
+    </taint_trace>
+    <other_references></other_references>
+  </item>
+  <item>
+    <severity>error</severity>
+    <line_from>59</line_from>
+    <line_to>59</line_to>
+    <type>TaintedUnserialize</type>
+    <message>Detected tainted code passed to unserialize or similar</message>
+    <file_name>src/SecurityVulnerability.php</file_name>
+    <file_path>/workspaces/php-static-analysis-sample/src/SecurityVulnerability.php</file_path>
+    <snippet>        return unserialize($serializedData);</snippet>
+    <selected_text>$serializedData</selected_text>
+    <from>1392</from>
+    <to>1407</to>
+    <snippet_from>1365</snippet_from>
+    <snippet_to>1409</snippet_to>
+    <column_from>28</column_from>
+    <column_to>43</column_to>
+    <error_level>-2</error_level>
+    <shortcode>250</shortcode>
+    <link>https://psalm.dev/250</link>
+    <taint_trace>
+      <label>$_COOKIE</label>
+      <entry_path_type></entry_path_type>
+    </taint_trace>
+    <taint_trace>
+      <line_from>96</line_from>
+      <line_to>96</line_to>
+      <label>$_COOKIE['data']</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        $data = $_COOKIE['data'];</snippet>
+      <from>2901</from>
+      <to>2909</to>
+      <snippet_from>2885</snippet_from>
+      <column_from>17</column_from>
+      <column_to>25</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>96</line_from>
+      <line_to>96</line_to>
+      <label>$data</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        $data = $_COOKIE['data'];</snippet>
+      <from>2893</from>
+      <to>2898</to>
+      <snippet_from>2885</snippet_from>
+      <column_from>9</column_from>
+      <column_to>14</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>97</line_from>
+      <line_to>97</line_to>
+      <label>call to App\SecurityVulnerability::loadData</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        $security-&gt;loadData($data);</snippet>
+      <from>2947</from>
+      <to>2952</to>
+      <snippet_from>2919</snippet_from>
+      <column_from>29</column_from>
+      <column_to>34</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>56</line_from>
+      <line_to>56</line_to>
+      <label>App\SecurityVulnerability::loadData#1</label>
+      <file_name>src/SecurityVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/SecurityVulnerability.php</file_path>
+      <snippet>    public function loadData($serializedData)</snippet>
+      <from>1262</from>
+      <to>1277</to>
+      <snippet_from>1233</snippet_from>
+      <column_from>30</column_from>
+      <column_to>45</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>56</line_from>
+      <line_to>56</line_to>
+      <label>$serializedData</label>
+      <file_name>src/SecurityVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/SecurityVulnerability.php</file_path>
+      <snippet>    public function loadData($serializedData)</snippet>
+      <from>1262</from>
+      <to>1277</to>
+      <snippet_from>1233</snippet_from>
+      <column_from>30</column_from>
+      <column_to>45</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>59</line_from>
+      <line_to>59</line_to>
+      <label>call to unserialize</label>
+      <file_name>src/SecurityVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/SecurityVulnerability.php</file_path>
+      <snippet>        return unserialize($serializedData);</snippet>
+      <from>1392</from>
+      <to>1407</to>
+      <snippet_from>1365</snippet_from>
+      <column_from>28</column_from>
+      <column_to>43</column_to>
+    </taint_trace>
+    <other_references></other_references>
+  </item>
+  <item>
+    <severity>error</severity>
+    <line_from>18</line_from>
+    <line_to>18</line_to>
+    <type>TaintedHtml</type>
+    <message>Detected tainted HTML</message>
+    <file_name>src/XssVulnerability.php</file_name>
+    <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+    <snippet>        echo "&lt;div&gt;" . $userInput . "&lt;/div&gt;";</snippet>
+    <selected_text>"&lt;div&gt;" . $userInput . "&lt;/div&gt;"</selected_text>
+    <from>468</from>
+    <to>499</to>
+    <snippet_from>455</snippet_from>
+    <snippet_to>500</snippet_to>
+    <column_from>14</column_from>
+    <column_to>45</column_to>
+    <error_level>-2</error_level>
+    <shortcode>245</shortcode>
+    <link>https://psalm.dev/245</link>
+    <taint_trace>
+      <label>$_GET</label>
+      <entry_path_type></entry_path_type>
+    </taint_trace>
+    <taint_trace>
+      <line_from>40</line_from>
+      <line_to>40</line_to>
+      <label>$_GET['input']</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        $userInput = $_GET['input'];</snippet>
+      <from>1086</from>
+      <to>1091</to>
+      <snippet_from>1065</snippet_from>
+      <column_from>22</column_from>
+      <column_to>27</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>40</line_from>
+      <line_to>40</line_to>
+      <label>$userInput</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        $userInput = $_GET['input'];</snippet>
+      <from>1073</from>
+      <to>1083</to>
+      <snippet_from>1065</snippet_from>
+      <column_from>9</column_from>
+      <column_to>19</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>41</line_from>
+      <line_to>41</line_to>
+      <label>call to App\XssVulnerability::displayUserInput</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        $xss-&gt;displayUserInput($userInput);</snippet>
+      <from>1133</from>
+      <to>1143</to>
+      <snippet_from>1102</snippet_from>
+      <column_from>32</column_from>
+      <column_to>42</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>15</line_from>
+      <line_to>15</line_to>
+      <label>App\XssVulnerability::displayUserInput#1</label>
+      <file_name>src/XssVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+      <snippet>    public function displayUserInput($userInput)</snippet>
+      <from>359</from>
+      <to>369</to>
+      <snippet_from>322</snippet_from>
+      <column_from>38</column_from>
+      <column_to>48</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>15</line_from>
+      <line_to>15</line_to>
+      <label>$userInput</label>
+      <file_name>src/XssVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+      <snippet>    public function displayUserInput($userInput)</snippet>
+      <from>359</from>
+      <to>369</to>
+      <snippet_from>322</snippet_from>
+      <column_from>38</column_from>
+      <column_to>48</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>18</line_from>
+      <line_to>18</line_to>
+      <label>concat</label>
+      <file_name>src/XssVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+      <snippet>        echo "&lt;div&gt;" . $userInput . "&lt;/div&gt;";</snippet>
+      <from>468</from>
+      <to>488</to>
+      <snippet_from>455</snippet_from>
+      <column_from>14</column_from>
+      <column_to>34</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>18</line_from>
+      <line_to>18</line_to>
+      <label>concat</label>
+      <file_name>src/XssVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+      <snippet>        echo "&lt;div&gt;" . $userInput . "&lt;/div&gt;";</snippet>
+      <from>468</from>
+      <to>499</to>
+      <snippet_from>455</snippet_from>
+      <column_from>14</column_from>
+      <column_to>45</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>18</line_from>
+      <line_to>18</line_to>
+      <label>call to echo</label>
+      <file_name>src/XssVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+      <snippet>        echo "&lt;div&gt;" . $userInput . "&lt;/div&gt;";</snippet>
+      <from>468</from>
+      <to>499</to>
+      <snippet_from>455</snippet_from>
+      <column_from>14</column_from>
+      <column_to>45</column_to>
+    </taint_trace>
+    <other_references></other_references>
+  </item>
+  <item>
+    <severity>error</severity>
+    <line_from>18</line_from>
+    <line_to>18</line_to>
+    <type>TaintedTextWithQuotes</type>
+    <message>Detected tainted text with possible quotes</message>
+    <file_name>src/XssVulnerability.php</file_name>
+    <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+    <snippet>        echo "&lt;div&gt;" . $userInput . "&lt;/div&gt;";</snippet>
+    <selected_text>"&lt;div&gt;" . $userInput . "&lt;/div&gt;"</selected_text>
+    <from>468</from>
+    <to>499</to>
+    <snippet_from>455</snippet_from>
+    <snippet_to>500</snippet_to>
+    <column_from>14</column_from>
+    <column_to>45</column_to>
+    <error_level>-2</error_level>
+    <shortcode>274</shortcode>
+    <link>https://psalm.dev/274</link>
+    <taint_trace>
+      <label>$_GET</label>
+      <entry_path_type></entry_path_type>
+    </taint_trace>
+    <taint_trace>
+      <line_from>40</line_from>
+      <line_to>40</line_to>
+      <label>$_GET['input']</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        $userInput = $_GET['input'];</snippet>
+      <from>1086</from>
+      <to>1091</to>
+      <snippet_from>1065</snippet_from>
+      <column_from>22</column_from>
+      <column_to>27</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>40</line_from>
+      <line_to>40</line_to>
+      <label>$userInput</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        $userInput = $_GET['input'];</snippet>
+      <from>1073</from>
+      <to>1083</to>
+      <snippet_from>1065</snippet_from>
+      <column_from>9</column_from>
+      <column_to>19</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>41</line_from>
+      <line_to>41</line_to>
+      <label>call to App\XssVulnerability::displayUserInput</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        $xss-&gt;displayUserInput($userInput);</snippet>
+      <from>1133</from>
+      <to>1143</to>
+      <snippet_from>1102</snippet_from>
+      <column_from>32</column_from>
+      <column_to>42</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>15</line_from>
+      <line_to>15</line_to>
+      <label>App\XssVulnerability::displayUserInput#1</label>
+      <file_name>src/XssVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+      <snippet>    public function displayUserInput($userInput)</snippet>
+      <from>359</from>
+      <to>369</to>
+      <snippet_from>322</snippet_from>
+      <column_from>38</column_from>
+      <column_to>48</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>15</line_from>
+      <line_to>15</line_to>
+      <label>$userInput</label>
+      <file_name>src/XssVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+      <snippet>    public function displayUserInput($userInput)</snippet>
+      <from>359</from>
+      <to>369</to>
+      <snippet_from>322</snippet_from>
+      <column_from>38</column_from>
+      <column_to>48</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>18</line_from>
+      <line_to>18</line_to>
+      <label>concat</label>
+      <file_name>src/XssVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+      <snippet>        echo "&lt;div&gt;" . $userInput . "&lt;/div&gt;";</snippet>
+      <from>468</from>
+      <to>488</to>
+      <snippet_from>455</snippet_from>
+      <column_from>14</column_from>
+      <column_to>34</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>18</line_from>
+      <line_to>18</line_to>
+      <label>concat</label>
+      <file_name>src/XssVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+      <snippet>        echo "&lt;div&gt;" . $userInput . "&lt;/div&gt;";</snippet>
+      <from>468</from>
+      <to>499</to>
+      <snippet_from>455</snippet_from>
+      <column_from>14</column_from>
+      <column_to>45</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>18</line_from>
+      <line_to>18</line_to>
+      <label>call to echo</label>
+      <file_name>src/XssVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+      <snippet>        echo "&lt;div&gt;" . $userInput . "&lt;/div&gt;";</snippet>
+      <from>468</from>
+      <to>499</to>
+      <snippet_from>455</snippet_from>
+      <column_from>14</column_from>
+      <column_to>45</column_to>
+    </taint_trace>
+    <other_references></other_references>
+  </item>
+  <item>
+    <severity>error</severity>
+    <line_from>36</line_from>
+    <line_to>36</line_to>
+    <type>TaintedHtml</type>
+    <message>Detected tainted HTML</message>
+    <file_name>src/XssVulnerability.php</file_name>
+    <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+    <snippet>        echo "&lt;script&gt;alert('" . $message . "');&lt;/script&gt;";</snippet>
+    <selected_text>"&lt;script&gt;alert('" . $message . "');&lt;/script&gt;"</selected_text>
+    <from>930</from>
+    <to>975</to>
+    <snippet_from>917</snippet_from>
+    <snippet_to>976</snippet_to>
+    <column_from>14</column_from>
+    <column_to>59</column_to>
+    <error_level>-2</error_level>
+    <shortcode>245</shortcode>
+    <link>https://psalm.dev/245</link>
+    <taint_trace>
+      <label>$_COOKIE</label>
+      <entry_path_type></entry_path_type>
+    </taint_trace>
+    <taint_trace>
+      <line_from>48</line_from>
+      <line_to>48</line_to>
+      <label>$_COOKIE['msg']</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        $message = $_COOKIE['msg'];</snippet>
+      <from>1405</from>
+      <to>1413</to>
+      <snippet_from>1386</snippet_from>
+      <column_from>20</column_from>
+      <column_to>28</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>48</line_from>
+      <line_to>48</line_to>
+      <label>$message</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        $message = $_COOKIE['msg'];</snippet>
+      <from>1394</from>
+      <to>1402</to>
+      <snippet_from>1386</snippet_from>
+      <column_from>9</column_from>
+      <column_to>17</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>49</line_from>
+      <line_to>49</line_to>
+      <label>call to App\XssVulnerability::showMessage</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        $xss-&gt;showMessage($message);</snippet>
+      <from>1448</from>
+      <to>1456</to>
+      <snippet_from>1422</snippet_from>
+      <column_from>27</column_from>
+      <column_to>35</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>34</line_from>
+      <line_to>34</line_to>
+      <label>App\XssVulnerability::showMessage#1</label>
+      <file_name>src/XssVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+      <snippet>    public function showMessage($message)</snippet>
+      <from>901</from>
+      <to>909</to>
+      <snippet_from>869</snippet_from>
+      <column_from>33</column_from>
+      <column_to>41</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>34</line_from>
+      <line_to>34</line_to>
+      <label>$message</label>
+      <file_name>src/XssVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+      <snippet>    public function showMessage($message)</snippet>
+      <from>901</from>
+      <to>909</to>
+      <snippet_from>869</snippet_from>
+      <column_from>33</column_from>
+      <column_to>41</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>36</line_from>
+      <line_to>36</line_to>
+      <label>concat</label>
+      <file_name>src/XssVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+      <snippet>        echo "&lt;script&gt;alert('" . $message . "');&lt;/script&gt;";</snippet>
+      <from>930</from>
+      <to>958</to>
+      <snippet_from>917</snippet_from>
+      <column_from>14</column_from>
+      <column_to>42</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>36</line_from>
+      <line_to>36</line_to>
+      <label>concat</label>
+      <file_name>src/XssVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+      <snippet>        echo "&lt;script&gt;alert('" . $message . "');&lt;/script&gt;";</snippet>
+      <from>930</from>
+      <to>975</to>
+      <snippet_from>917</snippet_from>
+      <column_from>14</column_from>
+      <column_to>59</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>36</line_from>
+      <line_to>36</line_to>
+      <label>call to echo</label>
+      <file_name>src/XssVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+      <snippet>        echo "&lt;script&gt;alert('" . $message . "');&lt;/script&gt;";</snippet>
+      <from>930</from>
+      <to>975</to>
+      <snippet_from>917</snippet_from>
+      <column_from>14</column_from>
+      <column_to>59</column_to>
+    </taint_trace>
+    <other_references></other_references>
+  </item>
+  <item>
+    <severity>error</severity>
+    <line_from>36</line_from>
+    <line_to>36</line_to>
+    <type>TaintedTextWithQuotes</type>
+    <message>Detected tainted text with possible quotes</message>
+    <file_name>src/XssVulnerability.php</file_name>
+    <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+    <snippet>        echo "&lt;script&gt;alert('" . $message . "');&lt;/script&gt;";</snippet>
+    <selected_text>"&lt;script&gt;alert('" . $message . "');&lt;/script&gt;"</selected_text>
+    <from>930</from>
+    <to>975</to>
+    <snippet_from>917</snippet_from>
+    <snippet_to>976</snippet_to>
+    <column_from>14</column_from>
+    <column_to>59</column_to>
+    <error_level>-2</error_level>
+    <shortcode>274</shortcode>
+    <link>https://psalm.dev/274</link>
+    <taint_trace>
+      <label>$_COOKIE</label>
+      <entry_path_type></entry_path_type>
+    </taint_trace>
+    <taint_trace>
+      <line_from>48</line_from>
+      <line_to>48</line_to>
+      <label>$_COOKIE['msg']</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        $message = $_COOKIE['msg'];</snippet>
+      <from>1405</from>
+      <to>1413</to>
+      <snippet_from>1386</snippet_from>
+      <column_from>20</column_from>
+      <column_to>28</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>48</line_from>
+      <line_to>48</line_to>
+      <label>$message</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        $message = $_COOKIE['msg'];</snippet>
+      <from>1394</from>
+      <to>1402</to>
+      <snippet_from>1386</snippet_from>
+      <column_from>9</column_from>
+      <column_to>17</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>49</line_from>
+      <line_to>49</line_to>
+      <label>call to App\XssVulnerability::showMessage</label>
+      <file_name>src/EntryPoint.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/EntryPoint.php</file_path>
+      <snippet>        $xss-&gt;showMessage($message);</snippet>
+      <from>1448</from>
+      <to>1456</to>
+      <snippet_from>1422</snippet_from>
+      <column_from>27</column_from>
+      <column_to>35</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>34</line_from>
+      <line_to>34</line_to>
+      <label>App\XssVulnerability::showMessage#1</label>
+      <file_name>src/XssVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+      <snippet>    public function showMessage($message)</snippet>
+      <from>901</from>
+      <to>909</to>
+      <snippet_from>869</snippet_from>
+      <column_from>33</column_from>
+      <column_to>41</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>34</line_from>
+      <line_to>34</line_to>
+      <label>$message</label>
+      <file_name>src/XssVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+      <snippet>    public function showMessage($message)</snippet>
+      <from>901</from>
+      <to>909</to>
+      <snippet_from>869</snippet_from>
+      <column_from>33</column_from>
+      <column_to>41</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>36</line_from>
+      <line_to>36</line_to>
+      <label>concat</label>
+      <file_name>src/XssVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+      <snippet>        echo "&lt;script&gt;alert('" . $message . "');&lt;/script&gt;";</snippet>
+      <from>930</from>
+      <to>958</to>
+      <snippet_from>917</snippet_from>
+      <column_from>14</column_from>
+      <column_to>42</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>36</line_from>
+      <line_to>36</line_to>
+      <label>concat</label>
+      <file_name>src/XssVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+      <snippet>        echo "&lt;script&gt;alert('" . $message . "');&lt;/script&gt;";</snippet>
+      <from>930</from>
+      <to>975</to>
+      <snippet_from>917</snippet_from>
+      <column_from>14</column_from>
+      <column_to>59</column_to>
+    </taint_trace>
+    <taint_trace>
+      <line_from>36</line_from>
+      <line_to>36</line_to>
+      <label>call to echo</label>
+      <file_name>src/XssVulnerability.php</file_name>
+      <file_path>/workspaces/php-static-analysis-sample/src/XssVulnerability.php</file_path>
+      <snippet>        echo "&lt;script&gt;alert('" . $message . "');&lt;/script&gt;";</snippet>
+      <from>930</from>
+      <to>975</to>
+      <snippet_from>917</snippet_from>
+      <column_from>14</column_from>
+      <column_to>59</column_to>
+    </taint_trace>
+    <other_references></other_references>
+  </item>
+</report>

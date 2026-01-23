@@ -4,7 +4,7 @@
 
 ## 前提条件 / Prerequisites
 
-- PHP 7.4以上
+- PHP 8.2以上
 - Composer
 
 ## セットアップ手順 / Setup Steps
@@ -40,7 +40,7 @@ composer run psalm
 composer run phpstan
 ```
 
-### 両方のツールを実行
+### すべてのツールを実行
 ```bash
 composer run analyse
 ```
@@ -60,7 +60,37 @@ composer run security
 **Psalm Taint Analysisとは？**
 通常のPsalmとは異なり、Taint Analysisはユーザー入力（$_GET、$_POST、$_COOKIEなど）から危険な操作（SQL実行、HTML出力、ファイル操作など）までのデータフローを追跡します。これにより、SQLインジェクション、XSS、コマンドインジェクションなどのセキュリティ脆弱性を検出できます。
 
-**注**: このリポジトリのコードは脆弱なパターンを示していますが、実際にTaint Analysisが脆弱性を検出するには、コード内で`$_GET`、`$_POST`、`$_COOKIE`などのユーザー入力が使用されている必要があります。
+## レポート生成 / Generating Reports
+
+各種フォーマットでレポートを生成し、`/reports` ディレクトリに出力できます。
+
+```bash
+# Psalmのレポートを全形式で生成（13ファイル）
+composer run report:psalm
+
+# Psalm Taint Analysisのレポートを全形式で生成（13ファイル）
+composer run report:psalm-taint
+
+# PHPStanのレポートを全形式で生成（10ファイル）
+composer run report:phpstan
+
+# すべてのレポートを一括生成（36ファイル）
+composer run report:all
+```
+
+### 生成されるレポート形式
+
+**Psalm / Psalm Taint Analysis:**
+- JSON: `psalm.json`, `psalm-codeclimate.json`, `psalm-sonarqube.json`, `psalm-summary.json`
+- XML: `psalm.xml`, `psalm-checkstyle.xml`, `psalm-junit.xml`
+- SARIF: `psalm.sarif`（GitHub Code Scanning対応）
+- テキスト: `psalm.txt`, `psalm.console`, `psalm.emacs`, `psalm.pylint`, `psalm-count.txt`
+
+**PHPStan:**
+- JSON: `phpstan.json`, `phpstan-pretty.json`, `phpstan-gitlab.json`
+- XML: `phpstan-checkstyle.xml`, `phpstan-junit.xml`
+- SARIF: `phpstan.sarif`（GitHub Code Scanning対応）
+- テキスト: `phpstan-table.txt`, `phpstan-raw.txt`, `phpstan-github.txt`, `phpstan-teamcity.txt`
 
 ## 検出される脆弱性の例 / Expected Vulnerabilities
 
@@ -75,14 +105,14 @@ composer run security
 ### Psalm Taint Analysisで検出されるもの（セキュリティモード）
 - **TaintedSql**: SQLインジェクション
 - **TaintedHtml**: XSS（クロスサイトスクリプティング）
+- **TaintedTextWithQuotes**: クォート付きテキストの危険な出力
 - **TaintedShell**: コマンドインジェクション
 - **TaintedFile**: ファイルパストラバーサル
 - **TaintedInclude**: ファイルインクルージョン
 - **TaintedUnserialize**: 安全でないデシリアライゼーション
+- **TaintedEval**: 任意コード実行
 
-💡 **重要**: セキュリティ脆弱性を検出するには、必ず `--taint-analysis` オプションを使用してください。
-
-**検出例**: このリポジトリのコードは脆弱なパターンを示していますが、実際にTaint Analysisが機能するには、コード内で`$_GET`、`$_POST`、`$_COOKIE`などのユーザー入力が使用されている必要があります。これらを使用することで、約9件のセキュリティ脆弱性が検出される可能性があります。
+💡 **重要**: このリポジトリには `EntryPoint.php` が含まれており、`$_GET`、`$_POST`、`$_COOKIE` からの入力を脆弱なメソッドに渡すことで、Taint Analysisが脆弱性を検出できるようになっています。
 
 ### PHPStanで検出されるもの (レベル9)
 - 型の不一致
@@ -99,7 +129,24 @@ composer run security
 - ファイルパストラバーサル
 - 弱い暗号化アルゴリズム
 
-**注意**: SQLインジェクションやXSSなどのセキュリティ脆弱性を検出するには、**Psalm Taint Analysis**（`composer run psalm-security`）を使用してください。Taint Analysisにより、複数のセキュリティ脆弱性が検出されます。
+**注意**: これらのセキュリティ脆弱性を検出するには、**Psalm Taint Analysis**（`composer run psalm-security`）を使用してください。
+
+## GitHub Actions / CI
+
+このリポジトリにはGitHub Actionsワークフローが含まれています。
+
+### ワークフロー一覧
+
+| ワークフロー | 説明 | トリガー |
+|-------------|------|----------|
+| `all-checks.yml` | Psalm + PHPStan + Taint Analysis | push / PR / 手動 |
+| `psalm.yml` | Psalm単体 | 手動のみ |
+| `phpstan.yml` | PHPStan単体 | 手動のみ |
+| `psalm-taint-analysis.yml` | Psalm Taint Analysis単体 | 手動のみ |
+
+### SARIF連携
+
+Psalm Taint AnalysisとPHPStanの結果は、SARIF形式でGitHub Code Scanningにアップロードされます。結果はGitHubリポジトリの **Security** タブで確認できます。
 
 ## 解析結果の確認 / Checking Results
 

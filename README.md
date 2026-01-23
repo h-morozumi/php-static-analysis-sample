@@ -23,9 +23,35 @@ composer run psalm-security
 # または
 composer run security
 
-# 両方の解析を実行
+# すべての解析を実行
 composer run analyse
 ```
+
+## レポート生成
+
+各種フォーマットでレポートを生成できます。生成されたレポートは `/reports` ディレクトリに出力されます。
+
+```bash
+# Psalmのレポートを全形式で生成
+composer run report:psalm
+
+# Psalm Taint Analysisのレポートを全形式で生成
+composer run report:psalm-taint
+
+# PHPStanのレポートを全形式で生成
+composer run report:phpstan
+
+# すべてのレポートを一括生成
+composer run report:all
+```
+
+### 生成されるレポート形式
+
+| ツール | 形式 |
+|--------|------|
+| Psalm | json, xml, sarif, txt, console, emacs, pylint, checkstyle.xml, junit.xml, codeclimate.json, sonarqube.json, summary.json, count.txt |
+| Psalm Taint | 同上 |
+| PHPStan | json, sarif, pretty.json, checkstyle.xml, junit.xml, gitlab.json, github.txt, teamcity.txt, table.txt, raw.txt |
 
 ## 含まれる脆弱性の例
 
@@ -68,6 +94,22 @@ composer run analyse
 - 常に真になる条件
 - 不適切なループ構造
 
+### 7. Taint Analysis検証用エントリーポイント (`EntryPoint.php`)
+- `$_GET`、`$_POST`、`$_COOKIE` からの入力を脆弱なメソッドに渡す
+- Psalm Taint Analysisでセキュリティ脆弱性を検出するためのデモコード
+
+## ソースファイル一覧
+
+| ファイル | 説明 | 検出対象 |
+|---------|------|----------|
+| `DatabaseVulnerability.php` | SQLインジェクション | Taint Analysis |
+| `XssVulnerability.php` | XSS（クロスサイトスクリプティング） | Taint Analysis |
+| `TypeSafetyVulnerability.php` | 型安全性の問題 | Psalm / PHPStan |
+| `FileVulnerability.php` | ファイル操作の脆弱性 | Taint Analysis |
+| `SecurityVulnerability.php` | セキュリティ全般の脆弱性 | Taint Analysis |
+| `DeadCodeVulnerability.php` | デッドコード・到達不可能コード | Psalm / PHPStan |
+| `EntryPoint.php` | Taint Analysis用エントリーポイント | Taint Analysis |
+
 ## 静的解析ツールの設定
 
 ### Psalm
@@ -84,6 +126,24 @@ composer run analyse
 ### PHPStan
 - 設定ファイル: `phpstan.neon`
 - ルールレベル: 9（最も厳格）
+- SARIF出力: `jbelien/phpstan-sarif-formatter` を使用
+
+## GitHub Actions / CI
+
+このリポジトリにはGitHub Actionsワークフローが含まれており、プッシュ時に自動的に静的解析を実行します。
+
+### ワークフロー
+
+| ファイル | 説明 | トリガー |
+|---------|------|----------|
+| `all-checks.yml` | Psalm + PHPStan + Taint Analysis を一括実行 | push / PR |
+| `psalm.yml` | Psalm単体実行 | 手動 |
+| `phpstan.yml` | PHPStan単体実行 | 手動 |
+| `psalm-taint-analysis.yml` | Psalm Taint Analysis単体実行 | 手動 |
+
+### GitHub Security タブ連携
+
+Psalm Taint AnalysisとPHPStanの結果はSARIF形式でGitHub Code Scanningにアップロードされ、**Security** タブで確認できます。
 
 ## 学習目的
 

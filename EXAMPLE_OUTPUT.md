@@ -5,99 +5,95 @@
 ## Psalmの実行例
 
 ```bash
-$ ./vendor/bin/psalm
+$ composer run psalm
 ```
 
 ### 期待される出力:
 
 ```
+Target PHP version: 8.2 (inferred from composer.json).
 Scanning files...
 Analyzing files...
 
+ERROR: PossiblyUnusedMethod - src/DatabaseVulnerability.php:44:21
+    Cannot find any calls to method App\DatabaseVulnerability::deleteUser
+
+ERROR: UnusedClass - src/DeadCodeVulnerability.php:9:7
+    Class App\DeadCodeVulnerability is never used
+
+ERROR: UnevaluatedCode - src/DeadCodeVulnerability.php:20:9
+    Expressions after return/throw/continue
+
+ERROR: UnusedVariable - src/DeadCodeVulnerability.php:40:9
+    $unused is never referenced or the value is not used
+
+ERROR: RedundantCondition - src/DeadCodeVulnerability.php:52:13
+    Type 10 for $x is always >= 5
+
+ERROR: UnusedClass - src/EntryPoint.php:12:7
+    Class App\EntryPoint is never used
+
+ERROR: InvalidScalarArgument - src/SecurityVulnerability.php:18:20
+    Argument 1 of md5 expects string, but int provided
+
+ERROR: ForbiddenCode - src/SecurityVulnerability.php:48:19
+    Unsafe shell_exec
+
 ERROR: UndefinedVariable - src/TypeSafetyVulnerability.php:18:13
     Cannot find referenced variable $result
-    
-        if ($result > 0) {
 
-ERROR: PossiblyNullReference - src/TypeSafetyVulnerability.php:28:16
-    Cannot call method getName on possibly null value
-    
-        return $user->getName();
-
-ERROR: MixedReturnStatement - src/TypeSafetyVulnerability.php:39:20
-    Could not infer a return type
-    
-            return "string data";
-
-ERROR: MixedReturnStatement - src/TypeSafetyVulnerability.php:41:16
-    Could not infer a return type
-    
-        return 123;
-
-ERROR: PossiblyUndefinedArrayOffset - src/TypeSafetyVulnerability.php:51:16
-    Possibly undefined array offset
-    
-        return $config[$key];
-
-ERROR: PossiblyNullArgument - src/TypeSafetyVulnerability.php:67:23
+ERROR: PossiblyNullArgument - src/TypeSafetyVulnerability.php:73:23
     Argument 1 of strlen cannot be null, possibly null value provided
-    
-        return strlen($data);
-
-ERROR: UnusedMethod - src/DeadCodeVulnerability.php:28:21
-    Method App\DeadCodeVulnerability::unusedMethod is never used
-    
-    private function unusedMethod()
-
-ERROR: UnusedVariable - src/DeadCodeVulnerability.php:37:9
-    $unused is never referenced in this method
-    
-        $unused = "This is never used";
-
-ERROR: UnreachableStatement - src/DeadCodeVulnerability.php:20:9
-    Statement is unreachable
-    
-        echo "This will never execute";
 
 ------------------------------
-9 errors found
+20 errors found
+------------------------------
+57 other issues found.
+You can display them with --show-info=true
 ------------------------------
 
-Checks took 0.50 seconds and used 50.000MB of memory
-Psalm was able to infer types for 95% of the codebase
+Checks took 0.98 seconds and used 30.447MB of memory
+Psalm was able to infer types for 68.7500% of the codebase
 ```
 
 ## PHPStanの実行例
 
 ```bash
-$ ./vendor/bin/phpstan analyse
+$ composer run phpstan
 ```
 
 ### 期待される出力:
 
 ```
 Note: Using configuration file phpstan.neon.
- 1/6 [▓░░░░░░░░░░░░░░░░░░░░░░░░░░░]  16%
- 2/6 [▓▓▓▓▓▓▓▓▓░░░░░░░░░░░░░░░░░░░]  33%
- 3/6 [▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░░░░░░░░░░░░░]  50%
- 4/6 [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░░░░░░░░]  66%
- 5/6 [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓░░░░░]  83%
- 6/6 [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 100%
+ 7/7 [▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓] 100%
 
- ------ ------------------------------------------------------------------------
+ ------ -------------------------------------------------------------------
+  Line   src/DatabaseVulnerability.php
+ ------ -------------------------------------------------------------------
+  12     Property App\DatabaseVulnerability::$pdo has no type specified.
+  29     Method App\DatabaseVulnerability::getUserById() has no return type
+  38     Method App\DatabaseVulnerability::searchUsers() has no return type
+  44     Method App\DatabaseVulnerability::deleteUser() has no return type
+ ------ -------------------------------------------------------------------
+
+ ------ -------------------------------------------------------------------
   Line   src/TypeSafetyVulnerability.php
- ------ ------------------------------------------------------------------------
+ ------ -------------------------------------------------------------------
   18     Undefined variable: $result
-  28     Cannot call method getName() on mixed
-  39     Method App\TypeSafetyVulnerability::getData() has no return type
-  41     Method App\TypeSafetyVulnerability::getData() has no return type
-  51     Cannot access offset mixed on mixed
-  67     Parameter #1 $string of function strlen expects string, string|null given
- ------ ------------------------------------------------------------------------
+  73     Parameter #1 $string of function strlen expects string, string|null given
+ ------ -------------------------------------------------------------------
 
- ------ ------------------------------------------------------------------------
+ ------ -------------------------------------------------------------------
   Line   src/DeadCodeVulnerability.php
- ------ ------------------------------------------------------------------------
+ ------ -------------------------------------------------------------------
+  20     Unreachable statement - code above always terminates
+  21     Unreachable statement - code above always terminates
+ ------ -------------------------------------------------------------------
+
+ [ERROR] Found 63 errors
+
+```
   20     Unreachable statement - code above always terminates
   28     Method App\DeadCodeVulnerability::unusedMethod() is unused
   37     Variable $unused is never read
@@ -125,7 +121,16 @@ Note: Using configuration file phpstan.neon.
 
 ### 重要度の分類
 
-#### 🔴 高: 即座に修正が必要
+#### 🔴 高（セキュリティ）: 即座に修正が必要
+- **TaintedSql**: SQLインジェクション
+- **TaintedHtml**: XSS（クロスサイトスクリプティング）
+- **TaintedShell**: コマンドインジェクション
+- **TaintedEval**: 任意コード実行
+- **TaintedUnserialize**: 安全でないデシリアライゼーション
+
+これらのエラーは、セキュリティ脆弱性を示しており、攻撃者に悪用される可能性があります。
+
+#### 🔴 高（型安全性）: 即座に修正が必要
 - **UndefinedVariable**: 未定義変数の使用
 - **PossiblyNullReference**: Null参照の可能性
 - **PossiblyNullArgument**: Nullが渡される可能性
@@ -136,12 +141,14 @@ Note: Using configuration file phpstan.neon.
 - **MixedReturnStatement**: 型が不明確な戻り値
 - **PossiblyUndefinedArrayOffset**: 配列キーが存在しない可能性
 - **UnreachableStatement**: 到達不可能なコード
+- **ForbiddenCode**: 危険な関数の使用
 
 これらのエラーは、コードの品質や保守性に影響します。
 
 #### 🟢 低: 改善の余地
 - **UnusedMethod**: 使用されていないメソッド
 - **UnusedVariable**: 使用されていない変数
+- **UnusedClass**: 使用されていないクラス
 
 これらは直接的な問題ではありませんが、コードを整理する機会です。
 
@@ -157,71 +164,128 @@ Note: Using configuration file phpstan.neon.
 
 これらのセキュリティ脆弱性を検出するには、**Psalm Taint Analysis** を使用する必要があります。
 
-## Psalm Taint Analysisの実行例
-
-```bash
-$ ./vendor/bin/psalm --taint-analysis
-# または
-$ composer run psalm-security
-```
-
-### 期待される出力の例:
-
-**重要な注意**: 以下の出力例は、各メソッドのパラメータにユーザー入力（$_GET、$_POST、$_COOKIEなど）が渡された場合の仮想的なものです。現在のコードベースには直接的なスーパーグローバル変数の使用がないため、実際にこのような出力を得るには、コードを変更して`$_GET`、`$_POST`、`$_COOKIE`を使用する必要があります。
-
-```
-Target PHP version: 8.2 (inferred from composer.json)
-Scanning files...
-Analyzing files...
-
-ERROR: TaintedSql - src/DatabaseVulnerability.php:18:16
-    Detected tainted SQL
-    
-        $sql = "SELECT * FROM users WHERE id = " . $id;
-                                                    ^^^^
-    
-    Tainted input from $_GET
-    This path into the sink parameter #1 is:
-    
-        src/DatabaseVulnerability.php:14:19 - $_GET['id']
-        src/DatabaseVulnerability.php:18:53 - $id
-
-ERROR: TaintedHtml - src/XssVulnerability.php:15:14
-    Detected tainted HTML
-    
-        echo "<div>" . $userInput . "</div>";
-                       ^^^^^^^^^^^
-    
-    Tainted input from $_GET
-
-ERROR: TaintedShell - src/SecurityVulnerability.php:32:22
-    Detected tainted shell command
-    
-        $output = shell_exec("ping -c 1 " . $host);
-                                             ^^^^^^
-
-ERROR: TaintedFile - src/FileVulnerability.php:15:16
-    Detected tainted file path
-    
-        return file_get_contents($filename);
-                                 ^^^^^^^^^^
-
-------------------------------
-9 errors found
-------------------------------
-
-Checks took 1.23 seconds and used 85.234MB of memory
-```
-
-### Taint Analysisの特徴
+## Taint Analysisの仕組み
 
 Psalm Taint Analysisは、通常の静的解析とは異なり、**データフローを追跡**します：
 
-1. **汚染源（Source）の特定**: ユーザー入力（$_GET、$_POST、$_COOKIEなど）
+1. **汚染源（Source）の特定**: ユーザー入力（`$_GET`、`$_POST`、`$_COOKIE`など）
 2. **データの流れを追跡**: 変数への代入、関数の引数、戻り値など
 3. **汚染シンク（Sink）での検出**: 危険な操作（SQL実行、HTML出力、ファイル操作など）
 
 これにより、従来の静的解析では検出が困難だったセキュリティ脆弱性を発見できます。
+
+### EntryPoint.php の役割
+
+このリポジトリには `EntryPoint.php` が含まれており、`$_GET`、`$_POST`、`$_COOKIE` からの入力を脆弱なメソッドに渡すことで、Taint Analysisが脆弱性を検出できるようになっています。
+
+## Psalm Taint Analysisの実行例
+
+```bash
+$ composer run psalm-security
+```
+
+### 期待される出力:
+
+```
+Target PHP version: 8.2 (inferred from composer.json).
+Scanning files...
+Analyzing files...
+
+ERROR: TaintedHtml - src/EntryPoint.php:45:14
+    Detected tainted HTML
+    
+    $_POST['comment'] -> $comment -> XssVulnerability::renderComment -> echo
+
+ERROR: TaintedTextWithQuotes - src/EntryPoint.php:45:14
+    Detected tainted text with possible quotes
+
+ERROR: TaintedFile - src/FileVulnerability.php:19:34
+    Detected tainted file handling
+    
+    $_GET['file'] -> $filename -> file_get_contents
+
+ERROR: TaintedFile - src/FileVulnerability.php:29:27
+    Detected tainted file handling
+    
+    $_POST['path'] -> $path -> file_put_contents
+
+ERROR: TaintedEval - src/SecurityVulnerability.php:38:14
+    Detected tainted code passed to eval or similar
+    
+    $_POST['code'] -> $code -> eval
+
+ERROR: TaintedShell - src/SecurityVulnerability.php:48:30
+    Detected tainted shell code
+    
+    $_GET['host'] -> $host -> shell_exec
+
+ERROR: TaintedUnserialize - src/SecurityVulnerability.php:59:28
+    Detected tainted code passed to unserialize or similar
+    
+    $_COOKIE['data'] -> $serializedData -> unserialize
+
+ERROR: TaintedHtml - src/XssVulnerability.php:18:14
+    Detected tainted HTML
+    
+    $_GET['input'] -> $userInput -> echo
+
+ERROR: TaintedTextWithQuotes - src/XssVulnerability.php:18:14
+    Detected tainted text with possible quotes
+
+ERROR: TaintedHtml - src/XssVulnerability.php:36:14
+    Detected tainted HTML
+    
+    $_COOKIE['msg'] -> $message -> echo
+
+ERROR: TaintedTextWithQuotes - src/XssVulnerability.php:36:14
+    Detected tainted text with possible quotes
+
+------------------------------
+11 errors found
+------------------------------
+
+Checks took 1.01 seconds and used 30.446MB of memory
+Psalm was able to infer types for 68.7500% of the codebase
+```
+
+### Taint Analysisで検出される脆弱性タイプ
+
+| エラータイプ | 説明 | 検出数 |
+|-------------|------|--------|
+| TaintedHtml | XSS（クロスサイトスクリプティング） | 3件 |
+| TaintedTextWithQuotes | クォート付きテキストの危険な出力 | 3件 |
+| TaintedFile | ファイルパストラバーサル | 2件 |
+| TaintedShell | コマンドインジェクション | 1件 |
+| TaintedEval | 任意コード実行 | 1件 |
+| TaintedUnserialize | 安全でないデシリアライゼーション | 1件 |
+
+## レポート生成の実行例
+
+```bash
+$ composer run report:all
+```
+
+### 生成されるファイル（/reportsディレクトリ）:
+
+**Psalm (13ファイル):**
+- psalm.json, psalm.xml, psalm.sarif, psalm.txt
+- psalm.console, psalm.emacs, psalm.pylint
+- psalm-checkstyle.xml, psalm-junit.xml
+- psalm-codeclimate.json, psalm-sonarqube.json
+- psalm-summary.json, psalm-count.txt
+
+**Psalm Taint Analysis (13ファイル):**
+- psalm-taint.json, psalm-taint.xml, psalm-taint.sarif, psalm-taint.txt
+- psalm-taint.console, psalm-taint.emacs, psalm-taint.pylint
+- psalm-taint-checkstyle.xml, psalm-taint-junit.xml
+- psalm-taint-codeclimate.json, psalm-taint-sonarqube.json
+- psalm-taint-summary.json, psalm-taint-count.txt
+
+**PHPStan (10ファイル):**
+- phpstan.json, phpstan.sarif, phpstan-pretty.json
+- phpstan-checkstyle.xml, phpstan-junit.xml
+- phpstan-gitlab.json, phpstan-github.txt
+- phpstan-teamcity.txt, phpstan-table.txt, phpstan-raw.txt
 
 ## 推奨アクション
 

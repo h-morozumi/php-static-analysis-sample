@@ -1,0 +1,306 @@
+ERROR: TaintedHtml - src/EntryPoint.php:45:14 - Detected tainted HTML (see https://psalm.dev/245)
+  $_POST
+    <no known location>
+
+  $_POST['comment'] - src/EntryPoint.php:44:20
+        $comment = $_POST['comment'];
+
+  $comment - src/EntryPoint.php:44:9
+        $comment = $_POST['comment'];
+
+  call to App\XssVulnerability::renderComment - src/EntryPoint.php:45:34
+        echo $xss->renderComment($comment);
+
+  App\XssVulnerability::renderComment#1 - src/XssVulnerability.php:25:35
+    public function renderComment($comment)
+
+  $comment - src/XssVulnerability.php:25:35
+    public function renderComment($comment)
+
+  concat - src/XssVulnerability.php:27:16
+        return "<p class='comment'>" . $comment . "</p>";
+
+  concat - src/XssVulnerability.php:27:16
+        return "<p class='comment'>" . $comment . "</p>";
+
+  App\XssVulnerability::renderComment - src/XssVulnerability.php:25:21
+    public function renderComment($comment)
+
+  call to echo - src/EntryPoint.php:45:14
+        echo $xss->renderComment($comment);
+
+
+
+ERROR: TaintedTextWithQuotes - src/EntryPoint.php:45:14 - Detected tainted text with possible quotes (see https://psalm.dev/274)
+  $_POST
+    <no known location>
+
+  $_POST['comment'] - src/EntryPoint.php:44:20
+        $comment = $_POST['comment'];
+
+  $comment - src/EntryPoint.php:44:9
+        $comment = $_POST['comment'];
+
+  call to App\XssVulnerability::renderComment - src/EntryPoint.php:45:34
+        echo $xss->renderComment($comment);
+
+  App\XssVulnerability::renderComment#1 - src/XssVulnerability.php:25:35
+    public function renderComment($comment)
+
+  $comment - src/XssVulnerability.php:25:35
+    public function renderComment($comment)
+
+  concat - src/XssVulnerability.php:27:16
+        return "<p class='comment'>" . $comment . "</p>";
+
+  concat - src/XssVulnerability.php:27:16
+        return "<p class='comment'>" . $comment . "</p>";
+
+  App\XssVulnerability::renderComment - src/XssVulnerability.php:25:21
+    public function renderComment($comment)
+
+  call to echo - src/EntryPoint.php:45:14
+        echo $xss->renderComment($comment);
+
+
+
+ERROR: TaintedFile - src/FileVulnerability.php:19:34 - Detected tainted file handling (see https://psalm.dev/255)
+  $_GET
+    <no known location>
+
+  $_GET['file'] - src/EntryPoint.php:78:21
+        $filename = $_GET['file'];
+
+  $filename - src/EntryPoint.php:78:9
+        $filename = $_GET['file'];
+
+  call to App\FileVulnerability::readFile - src/EntryPoint.php:79:25
+        $file->readFile($filename);
+
+  App\FileVulnerability::readFile#1 - src/FileVulnerability.php:15:30
+    public function readFile($filename)
+
+  $filename - src/FileVulnerability.php:15:30
+    public function readFile($filename)
+
+  call to file_get_contents - src/FileVulnerability.php:19:34
+        return file_get_contents($filename);
+
+
+
+ERROR: TaintedFile - src/FileVulnerability.php:29:27 - Detected tainted file handling (see https://psalm.dev/255)
+  $_POST
+    <no known location>
+
+  $_POST['path'] - src/EntryPoint.php:82:17
+        $path = $_POST['path'];
+
+  $path - src/EntryPoint.php:82:9
+        $path = $_POST['path'];
+
+  call to App\FileVulnerability::saveFile - src/EntryPoint.php:84:25
+        $file->saveFile($path, $content);
+
+  App\FileVulnerability::saveFile#1 - src/FileVulnerability.php:26:30
+    public function saveFile($path, $content)
+
+  $path - src/FileVulnerability.php:26:30
+    public function saveFile($path, $content)
+
+  call to file_put_contents - src/FileVulnerability.php:29:27
+        file_put_contents($path, $content);
+
+
+
+ERROR: TaintedEval - src/SecurityVulnerability.php:38:14 - Detected tainted code passed to eval or similar (see https://psalm.dev/252)
+  $_POST
+    <no known location>
+
+  $_POST['code'] - src/EntryPoint.php:65:17
+        $code = $_POST['code'];
+
+  $code - src/EntryPoint.php:65:9
+        $code = $_POST['code'];
+
+  call to App\SecurityVulnerability::executeCode - src/EntryPoint.php:66:32
+        $security->executeCode($code);
+
+  App\SecurityVulnerability::executeCode#1 - src/SecurityVulnerability.php:35:33
+    public function executeCode($code)
+
+  $code - src/SecurityVulnerability.php:35:33
+    public function executeCode($code)
+
+
+
+ERROR: TaintedShell - src/SecurityVulnerability.php:48:30 - Detected tainted shell code (see https://psalm.dev/246)
+  $_GET
+    <no known location>
+
+  $_GET['host'] - src/EntryPoint.php:61:17
+        $host = $_GET['host'];
+
+  $host - src/EntryPoint.php:61:9
+        $host = $_GET['host'];
+
+  call to App\SecurityVulnerability::pingHost - src/EntryPoint.php:62:29
+        $security->pingHost($host);
+
+  App\SecurityVulnerability::pingHost#1 - src/SecurityVulnerability.php:45:30
+    public function pingHost($host)
+
+  $host - src/SecurityVulnerability.php:45:30
+    public function pingHost($host)
+
+  concat - src/SecurityVulnerability.php:48:30
+        $output = shell_exec("ping -c 1 " . $host);
+
+  call to shell_exec - src/SecurityVulnerability.php:48:30
+        $output = shell_exec("ping -c 1 " . $host);
+
+
+
+ERROR: TaintedUnserialize - src/SecurityVulnerability.php:59:28 - Detected tainted code passed to unserialize or similar (see https://psalm.dev/250)
+  $_COOKIE
+    <no known location>
+
+  $_COOKIE['data'] - src/EntryPoint.php:96:17
+        $data = $_COOKIE['data'];
+
+  $data - src/EntryPoint.php:96:9
+        $data = $_COOKIE['data'];
+
+  call to App\SecurityVulnerability::loadData - src/EntryPoint.php:97:29
+        $security->loadData($data);
+
+  App\SecurityVulnerability::loadData#1 - src/SecurityVulnerability.php:56:30
+    public function loadData($serializedData)
+
+  $serializedData - src/SecurityVulnerability.php:56:30
+    public function loadData($serializedData)
+
+  call to unserialize - src/SecurityVulnerability.php:59:28
+        return unserialize($serializedData);
+
+
+
+ERROR: TaintedHtml - src/XssVulnerability.php:18:14 - Detected tainted HTML (see https://psalm.dev/245)
+  $_GET
+    <no known location>
+
+  $_GET['input'] - src/EntryPoint.php:40:22
+        $userInput = $_GET['input'];
+
+  $userInput - src/EntryPoint.php:40:9
+        $userInput = $_GET['input'];
+
+  call to App\XssVulnerability::displayUserInput - src/EntryPoint.php:41:32
+        $xss->displayUserInput($userInput);
+
+  App\XssVulnerability::displayUserInput#1 - src/XssVulnerability.php:15:38
+    public function displayUserInput($userInput)
+
+  $userInput - src/XssVulnerability.php:15:38
+    public function displayUserInput($userInput)
+
+  concat - src/XssVulnerability.php:18:14
+        echo "<div>" . $userInput . "</div>";
+
+  concat - src/XssVulnerability.php:18:14
+        echo "<div>" . $userInput . "</div>";
+
+  call to echo - src/XssVulnerability.php:18:14
+        echo "<div>" . $userInput . "</div>";
+
+
+
+ERROR: TaintedTextWithQuotes - src/XssVulnerability.php:18:14 - Detected tainted text with possible quotes (see https://psalm.dev/274)
+  $_GET
+    <no known location>
+
+  $_GET['input'] - src/EntryPoint.php:40:22
+        $userInput = $_GET['input'];
+
+  $userInput - src/EntryPoint.php:40:9
+        $userInput = $_GET['input'];
+
+  call to App\XssVulnerability::displayUserInput - src/EntryPoint.php:41:32
+        $xss->displayUserInput($userInput);
+
+  App\XssVulnerability::displayUserInput#1 - src/XssVulnerability.php:15:38
+    public function displayUserInput($userInput)
+
+  $userInput - src/XssVulnerability.php:15:38
+    public function displayUserInput($userInput)
+
+  concat - src/XssVulnerability.php:18:14
+        echo "<div>" . $userInput . "</div>";
+
+  concat - src/XssVulnerability.php:18:14
+        echo "<div>" . $userInput . "</div>";
+
+  call to echo - src/XssVulnerability.php:18:14
+        echo "<div>" . $userInput . "</div>";
+
+
+
+ERROR: TaintedHtml - src/XssVulnerability.php:36:14 - Detected tainted HTML (see https://psalm.dev/245)
+  $_COOKIE
+    <no known location>
+
+  $_COOKIE['msg'] - src/EntryPoint.php:48:20
+        $message = $_COOKIE['msg'];
+
+  $message - src/EntryPoint.php:48:9
+        $message = $_COOKIE['msg'];
+
+  call to App\XssVulnerability::showMessage - src/EntryPoint.php:49:27
+        $xss->showMessage($message);
+
+  App\XssVulnerability::showMessage#1 - src/XssVulnerability.php:34:33
+    public function showMessage($message)
+
+  $message - src/XssVulnerability.php:34:33
+    public function showMessage($message)
+
+  concat - src/XssVulnerability.php:36:14
+        echo "<script>alert('" . $message . "');</script>";
+
+  concat - src/XssVulnerability.php:36:14
+        echo "<script>alert('" . $message . "');</script>";
+
+  call to echo - src/XssVulnerability.php:36:14
+        echo "<script>alert('" . $message . "');</script>";
+
+
+
+ERROR: TaintedTextWithQuotes - src/XssVulnerability.php:36:14 - Detected tainted text with possible quotes (see https://psalm.dev/274)
+  $_COOKIE
+    <no known location>
+
+  $_COOKIE['msg'] - src/EntryPoint.php:48:20
+        $message = $_COOKIE['msg'];
+
+  $message - src/EntryPoint.php:48:9
+        $message = $_COOKIE['msg'];
+
+  call to App\XssVulnerability::showMessage - src/EntryPoint.php:49:27
+        $xss->showMessage($message);
+
+  App\XssVulnerability::showMessage#1 - src/XssVulnerability.php:34:33
+    public function showMessage($message)
+
+  $message - src/XssVulnerability.php:34:33
+    public function showMessage($message)
+
+  concat - src/XssVulnerability.php:36:14
+        echo "<script>alert('" . $message . "');</script>";
+
+  concat - src/XssVulnerability.php:36:14
+        echo "<script>alert('" . $message . "');</script>";
+
+  call to echo - src/XssVulnerability.php:36:14
+        echo "<script>alert('" . $message . "');</script>";
+
+
+

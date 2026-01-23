@@ -1,0 +1,63 @@
+/workspaces/php-static-analysis-sample/src/DatabaseVulnerability.php:11:Property App\DatabaseVulnerability::$pdo has no type specified.
+/workspaces/php-static-analysis-sample/src/DatabaseVulnerability.php:13:Method App\DatabaseVulnerability::__construct() has parameter $pdo with no type specified.
+/workspaces/php-static-analysis-sample/src/DatabaseVulnerability.php:22:Method App\DatabaseVulnerability::getUserById() has no return type specified.
+/workspaces/php-static-analysis-sample/src/DatabaseVulnerability.php:22:Method App\DatabaseVulnerability::getUserById() has parameter $id with no type specified.
+/workspaces/php-static-analysis-sample/src/DatabaseVulnerability.php:33:Method App\DatabaseVulnerability::searchUsers() has no return type specified.
+/workspaces/php-static-analysis-sample/src/DatabaseVulnerability.php:33:Method App\DatabaseVulnerability::searchUsers() has parameter $name with no type specified.
+/workspaces/php-static-analysis-sample/src/DatabaseVulnerability.php:44:Method App\DatabaseVulnerability::deleteUser() has no return type specified.
+/workspaces/php-static-analysis-sample/src/DatabaseVulnerability.php:44:Method App\DatabaseVulnerability::deleteUser() has parameter $userId with no type specified.
+/workspaces/php-static-analysis-sample/src/DeadCodeVulnerability.php:15:Method App\DeadCodeVulnerability::unreachableCode() has no return type specified.
+/workspaces/php-static-analysis-sample/src/DeadCodeVulnerability.php:15:Method App\DeadCodeVulnerability::unreachableCode() has parameter $value with no type specified.
+/workspaces/php-static-analysis-sample/src/DeadCodeVulnerability.php:20:Unreachable statement - code above always terminates.
+/workspaces/php-static-analysis-sample/src/DeadCodeVulnerability.php:28:Method App\DeadCodeVulnerability::unusedMethod() has no return type specified.
+/workspaces/php-static-analysis-sample/src/DeadCodeVulnerability.php:28:Method App\DeadCodeVulnerability::unusedMethod() is unused.
+/workspaces/php-static-analysis-sample/src/DeadCodeVulnerability.php:37:Method App\DeadCodeVulnerability::unusedVariable() has no return type specified.
+/workspaces/php-static-analysis-sample/src/DeadCodeVulnerability.php:49:Method App\DeadCodeVulnerability::alwaysTrueCondition() has no return type specified.
+/workspaces/php-static-analysis-sample/src/DeadCodeVulnerability.php:52:Comparison operation ">" between 10 and 5 is always true.
+/workspaces/php-static-analysis-sample/src/DeadCodeVulnerability.php:54:Else branch is unreachable because previous condition is always true.
+/workspaces/php-static-analysis-sample/src/DeadCodeVulnerability.php:63:Method App\DeadCodeVulnerability::infiniteLoop() has no return type specified.
+/workspaces/php-static-analysis-sample/src/FileVulnerability.php:15:Method App\FileVulnerability::readFile() has no return type specified.
+/workspaces/php-static-analysis-sample/src/FileVulnerability.php:15:Method App\FileVulnerability::readFile() has parameter $filename with no type specified.
+/workspaces/php-static-analysis-sample/src/FileVulnerability.php:26:Method App\FileVulnerability::saveFile() has no return type specified.
+/workspaces/php-static-analysis-sample/src/FileVulnerability.php:26:Method App\FileVulnerability::saveFile() has parameter $content with no type specified.
+/workspaces/php-static-analysis-sample/src/FileVulnerability.php:26:Method App\FileVulnerability::saveFile() has parameter $path with no type specified.
+/workspaces/php-static-analysis-sample/src/FileVulnerability.php:36:Method App\FileVulnerability::loadTemplate() has no return type specified.
+/workspaces/php-static-analysis-sample/src/FileVulnerability.php:36:Method App\FileVulnerability::loadTemplate() has parameter $templateName with no type specified.
+/workspaces/php-static-analysis-sample/src/FileVulnerability.php:46:Method App\FileVulnerability::handleUpload() has no return type specified.
+/workspaces/php-static-analysis-sample/src/FileVulnerability.php:46:Method App\FileVulnerability::handleUpload() has parameter $uploadedFile with no type specified.
+/workspaces/php-static-analysis-sample/src/SecurityVulnerability.php:15:Method App\SecurityVulnerability::generateToken() has no return type specified.
+/workspaces/php-static-analysis-sample/src/SecurityVulnerability.php:18:Parameter #1 $string of function md5 expects string, int<0, max> given.
+/workspaces/php-static-analysis-sample/src/SecurityVulnerability.php:25:Method App\SecurityVulnerability::hashPassword() has no return type specified.
+/workspaces/php-static-analysis-sample/src/SecurityVulnerability.php:25:Method App\SecurityVulnerability::hashPassword() has parameter $password with no type specified.
+/workspaces/php-static-analysis-sample/src/SecurityVulnerability.php:35:Method App\SecurityVulnerability::executeCode() has no return type specified.
+/workspaces/php-static-analysis-sample/src/SecurityVulnerability.php:35:Method App\SecurityVulnerability::executeCode() has parameter $code with no type specified.
+/workspaces/php-static-analysis-sample/src/SecurityVulnerability.php:45:Method App\SecurityVulnerability::pingHost() has no return type specified.
+/workspaces/php-static-analysis-sample/src/SecurityVulnerability.php:45:Method App\SecurityVulnerability::pingHost() has parameter $host with no type specified.
+/workspaces/php-static-analysis-sample/src/SecurityVulnerability.php:56:Method App\SecurityVulnerability::loadData() has no return type specified.
+/workspaces/php-static-analysis-sample/src/SecurityVulnerability.php:56:Method App\SecurityVulnerability::loadData() has parameter $serializedData with no type specified.
+/workspaces/php-static-analysis-sample/src/SecurityVulnerability.php:66:Method App\SecurityVulnerability::login() has no return type specified.
+/workspaces/php-static-analysis-sample/src/SecurityVulnerability.php:66:Method App\SecurityVulnerability::login() has parameter $password with no type specified.
+/workspaces/php-static-analysis-sample/src/SecurityVulnerability.php:66:Method App\SecurityVulnerability::login() has parameter $username with no type specified.
+/workspaces/php-static-analysis-sample/src/TypeSafetyVulnerability.php:15:Method App\TypeSafetyVulnerability::useUndefinedVariable() has no return type specified.
+/workspaces/php-static-analysis-sample/src/TypeSafetyVulnerability.php:18:Undefined variable: $result
+/workspaces/php-static-analysis-sample/src/TypeSafetyVulnerability.php:28:Method App\TypeSafetyVulnerability::getUserName() has no return type specified.
+/workspaces/php-static-analysis-sample/src/TypeSafetyVulnerability.php:28:Method App\TypeSafetyVulnerability::getUserName() has parameter $user with no type specified.
+/workspaces/php-static-analysis-sample/src/TypeSafetyVulnerability.php:38:Method App\TypeSafetyVulnerability::getData() has no return type specified.
+/workspaces/php-static-analysis-sample/src/TypeSafetyVulnerability.php:38:Method App\TypeSafetyVulnerability::getData() has parameter $flag with no type specified.
+/workspaces/php-static-analysis-sample/src/TypeSafetyVulnerability.php:50:Method App\TypeSafetyVulnerability::getConfigValue() has no return type specified.
+/workspaces/php-static-analysis-sample/src/TypeSafetyVulnerability.php:50:Method App\TypeSafetyVulnerability::getConfigValue() has parameter $config with no type specified.
+/workspaces/php-static-analysis-sample/src/TypeSafetyVulnerability.php:50:Method App\TypeSafetyVulnerability::getConfigValue() has parameter $key with no type specified.
+/workspaces/php-static-analysis-sample/src/TypeSafetyVulnerability.php:60:Method App\TypeSafetyVulnerability::calculateTotal() has no return type specified.
+/workspaces/php-static-analysis-sample/src/TypeSafetyVulnerability.php:60:Method App\TypeSafetyVulnerability::calculateTotal() has parameter $price with no type specified.
+/workspaces/php-static-analysis-sample/src/TypeSafetyVulnerability.php:60:Method App\TypeSafetyVulnerability::calculateTotal() has parameter $quantity with no type specified.
+/workspaces/php-static-analysis-sample/src/TypeSafetyVulnerability.php:70:Method App\TypeSafetyVulnerability::processOptionalData() has no return type specified.
+/workspaces/php-static-analysis-sample/src/TypeSafetyVulnerability.php:73:Parameter #1 $string of function strlen expects string, string|null given.
+/workspaces/php-static-analysis-sample/src/XssVulnerability.php:15:Method App\XssVulnerability::displayUserInput() has no return type specified.
+/workspaces/php-static-analysis-sample/src/XssVulnerability.php:15:Method App\XssVulnerability::displayUserInput() has parameter $userInput with no type specified.
+/workspaces/php-static-analysis-sample/src/XssVulnerability.php:25:Method App\XssVulnerability::renderComment() has no return type specified.
+/workspaces/php-static-analysis-sample/src/XssVulnerability.php:25:Method App\XssVulnerability::renderComment() has parameter $comment with no type specified.
+/workspaces/php-static-analysis-sample/src/XssVulnerability.php:34:Method App\XssVulnerability::showMessage() has no return type specified.
+/workspaces/php-static-analysis-sample/src/XssVulnerability.php:34:Method App\XssVulnerability::showMessage() has parameter $message with no type specified.
+/workspaces/php-static-analysis-sample/src/XssVulnerability.php:43:Method App\XssVulnerability::createLink() has no return type specified.
+/workspaces/php-static-analysis-sample/src/XssVulnerability.php:43:Method App\XssVulnerability::createLink() has parameter $title with no type specified.
+/workspaces/php-static-analysis-sample/src/XssVulnerability.php:43:Method App\XssVulnerability::createLink() has parameter $url with no type specified.

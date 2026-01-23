@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<checkstyle>
+<file name="src/EntryPoint.php">
+ <error line="45" column="14" severity="error" message="TaintedHtml: Detected tainted HTML"/>
+</file>
+<file name="src/EntryPoint.php">
+ <error line="45" column="14" severity="error" message="TaintedTextWithQuotes: Detected tainted text with possible quotes"/>
+</file>
+<file name="src/FileVulnerability.php">
+ <error line="19" column="34" severity="error" message="TaintedFile: Detected tainted file handling"/>
+</file>
+<file name="src/FileVulnerability.php">
+ <error line="29" column="27" severity="error" message="TaintedFile: Detected tainted file handling"/>
+</file>
+<file name="src/SecurityVulnerability.php">
+ <error line="38" column="14" severity="error" message="TaintedEval: Detected tainted code passed to eval or similar"/>
+</file>
+<file name="src/SecurityVulnerability.php">
+ <error line="48" column="30" severity="error" message="TaintedShell: Detected tainted shell code"/>
+</file>
+<file name="src/SecurityVulnerability.php">
+ <error line="59" column="28" severity="error" message="TaintedUnserialize: Detected tainted code passed to unserialize or similar"/>
+</file>
+<file name="src/XssVulnerability.php">
+ <error line="18" column="14" severity="error" message="TaintedHtml: Detected tainted HTML"/>
+</file>
+<file name="src/XssVulnerability.php">
+ <error line="18" column="14" severity="error" message="TaintedTextWithQuotes: Detected tainted text with possible quotes"/>
+</file>
+<file name="src/XssVulnerability.php">
+ <error line="36" column="14" severity="error" message="TaintedHtml: Detected tainted HTML"/>
+</file>
+<file name="src/XssVulnerability.php">
+ <error line="36" column="14" severity="error" message="TaintedTextWithQuotes: Detected tainted text with possible quotes"/>
+</file>
+</checkstyle>

@@ -590,6 +590,79 @@ PsalmとPHPStanは、主に以下の問題を検出するのに優れていま�
    - **Snyk Code** - 追加のセキュリティスキャン
    - **SonarQube** - 総合的なコード品質とセキュリティ分析
 
+---
+
+## 7. EntryPoint.php - Taint Analysis検証用エントリーポイント
+
+### ファイルの目的
+
+`EntryPoint.php`は、Psalm Taint Analysisがセキュリティ脆弱性を検出できることを実証するためのファイルです。
+
+### 仕組み
+
+Taint Analysisは、**汚染源（Source）**から**汚染シンク（Sink）**へのデータフローを追跡します。
+
+```php
+// 汚染源（Source）: ユーザー入力
+$userId = $_GET['id'];
+
+// 汚染シンク（Sink）: 危険な操作
+$db->getUserById($userId);  // SQLインジェクションの危険
+```
+
+### 含まれる脆弱性パターン
+
+| メソッド | 汚染源 | 脆弱性タイプ |
+|---------|--------|-------------|
+| `handleUserRequest()` | `$_GET`, `$_POST` | TaintedSql |
+| `handleXssRequest()` | `$_GET`, `$_POST`, `$_COOKIE` | TaintedHtml, TaintedTextWithQuotes |
+| `handleCommandRequest()` | `$_GET`, `$_POST` | TaintedShell, TaintedEval |
+| `handleFileRequest()` | `$_GET`, `$_POST` | TaintedFile |
+| `handleDataRequest()` | `$_COOKIE` | TaintedUnserialize |
+
+### 検出結果
+
+```bash
+$ composer run psalm-security
+```
+
+**検出される脆弱性: 11件**
+- TaintedHtml: 3件
+- TaintedTextWithQuotes: 3件
+- TaintedFile: 2件
+- TaintedShell: 1件
+- TaintedEval: 1件
+- TaintedUnserialize: 1件
+
+---
+
+## レポート生成
+
+各種フォーマットでレポートを生成できます：
+
+```bash
+# すべてのレポートを一括生成（/reportsディレクトリに出力）
+composer run report:all
+
+# 個別のレポート生成
+composer run report:psalm        # Psalm（13ファイル）
+composer run report:psalm-taint  # Psalm Taint Analysis（13ファイル）
+composer run report:phpstan      # PHPStan（10ファイル）
+```
+
+### 生成されるファイル形式
+
+| 形式 | 用途 |
+|------|------|
+| SARIF | GitHub Code Scanning連携 |
+| JSON | プログラム処理、カスタムツール |
+| JUnit XML | CI/CDパイプライン（Jenkins等） |
+| Checkstyle XML | IDE統合 |
+| SonarQube JSON | SonarQube連携 |
+| CodeClimate JSON | CodeClimate連携 |
+| GitLab JSON | GitLab CI連携 |
+| TXT/Console | 人間が読むためのテキスト |
+
 ## 参考リンク
 
 - [Psalm Security Analysis Documentation](https://psalm.dev/docs/security_analysis/)

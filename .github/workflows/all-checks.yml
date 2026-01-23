@@ -134,11 +134,21 @@ jobs:
         run: composer install --prefer-dist --no-progress
 
       - name: Run Psalm Taint Analysis
-        run: ./vendor/bin/psalm --no-cache --taint-analysis --report=results.sarif
-        continue-on-error: true  # エラーがあってもSARIFアップロードを続行
+        id: psalm-taint
+        run: |
+          ./vendor/bin/psalm --no-cache --taint-analysis --report=results.sarif
+          echo "exit_code=$?" >> $GITHUB_OUTPUT
+        continue-on-error: true  # SARIFアップロードのため一旦続行
 
       - name: Upload SARIF to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v3
+        if: always()  # 前のステップが失敗しても実行
         with:
           sarif_file: results.sarif
           category: psalm-taint-analysis
+
+      - name: Check Psalm Taint Analysis Result
+        if: steps.psalm-taint.outcome == 'failure'
+        run: |
+          echo "::error::Psalm Taint Analysis detected security vulnerabilities!"
+          exit 1

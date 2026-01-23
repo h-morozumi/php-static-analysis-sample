@@ -81,7 +81,7 @@ class EntryPoint
         // $_POST からのパスとコンテンツを使用 (危険)
         $path = $_POST['path'];
         $content = $_POST['content'];
-        $file->writeFile($path, $content);
+        $file->saveFile($path, $content);
     }
 
     /**

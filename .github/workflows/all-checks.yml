@@ -146,7 +146,10 @@ jobs:
           category: psalm-taint-analysis
 
       - name: Check Psalm Taint Analysis Result
-        if: steps.psalm-taint.conclusion == 'failure'
         run: |
-          echo "::error::Psalm Taint Analysis detected security vulnerabilities!"
-          exit 1
+          ERRORS=$(jq '.runs[0].results | length' results.sarif)
+          echo "Found $ERRORS security issue(s)"
+          if [ "$ERRORS" -gt 0 ]; then
+            echo "::error::Psalm Taint Analysis detected $ERRORS security vulnerabilities!"
+            exit 1
+          fi

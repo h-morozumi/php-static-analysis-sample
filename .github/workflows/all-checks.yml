@@ -9,6 +9,7 @@ on:
 
 permissions:
   contents: read
+  security-events: write  # SARIF アップロードに必要
 
 jobs:
   setup:
@@ -133,4 +134,11 @@ jobs:
         run: composer install --prefer-dist --no-progress
 
       - name: Run Psalm Taint Analysis
-        run: composer run psalm-security
+        run: ./vendor/bin/psalm --no-cache --taint-analysis --report=results.sarif
+        continue-on-error: true  # エラーがあってもSARIFアップロードを続行
+
+      - name: Upload SARIF to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: results.sarif
+          category: psalm-taint-analysis
